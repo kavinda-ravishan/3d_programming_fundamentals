@@ -24,76 +24,32 @@ public:
         cv::destroyAllWindows();
     }
 
-    void Loop() {
+    int GetFrameWidth() const noexcept { return _frame_width; }
+    int GetFrameHeight() const noexcept { return _frame_height; }
 
-        InitModel();
-
-        while (_main_loop_active) {
-
-            BeginFrame();
-
-            UpdateModel();
-            ComposeFrame();
-
-            EndFrame();
-            GetIO();
-        }
-
+    void BeginFrame() {
+        ClearFrame();
     }
 
-private:
-    const std::string _window_name{};
-    const int _frame_width{};
-    const int _frame_height{};
-    const open_3d::Color _init_color{ open_3d::Colors::Black };
-
-    cv::Mat _canvas;
-    bool _main_loop_active{ true };
-
-    /********************************/
-    /*  User Variables              */
-    std::vector<open_3d::Vec2> star;
-    float theta = 0.0f;
-    static constexpr float vRot = open_3d::PI / 60.0f;
-    static constexpr float radInner = 1.0f;
-    static constexpr float radOuter = 2.0f;
-    static constexpr int nflares = 5;
-    static constexpr float size = 100.0f;
-    /********************************/
-
-private:
-    void InitModel() {
-        const float dTheta = 2.0f * open_3d::PI / float(nflares * 2);
-        for (int i = 0; i < nflares * 2; i++)
-        {
-            const float rad = (i % 2 == 0) ? radOuter : radInner;
-            star.emplace_back(
-                rad * cos(float(i) * dTheta),
-                rad * sin(float(i) * dTheta)
-            );
-        }
+    void EndFrame() {
+        cv::imshow(_window_name, _canvas);
     }
 
-    void UpdateModel() {
-        theta += vRot;
+    int GetInput() {
+        const int key = cv::waitKey(0); // waits indefinitely for a key press
+        //std::cout << "Key code: " << key << ", Char : " << static_cast<char>(key) << "\n";
+        return key;
     }
 
-    void ComposeFrame() {
-        const open_3d::Color model_color = open_3d::Colors::White;
+    void ClearFrame() {
+        // Interpret the canvas as 32-bit pixels (CV_8UC4 assumed)
+        uint32_t* ptr = _canvas.ptr<uint32_t>(0);
 
-        const open_3d::Vec2 trl = { float(_frame_width) / 2.0f,float(_frame_height) / 2.0f };
-        const open_3d::Mat2 trf = open_3d::Mat2::Rotation(theta) * open_3d::Mat2::Scaling(size);
-        auto vtx(star);
-        for (auto& v : vtx)
-        {
-            v *= trf;
-            v += trl;
-        }
-        for (auto i = vtx.cbegin(), end = std::prev(vtx.cend()); i != end; i++)
-        {
-            DrawLine(*i, *std::next(i), model_color);
-        }
-        DrawLine(vtx.front(), vtx.back(), model_color);
+        // Total number of pixels
+        size_t total = _canvas.rows * _canvas.cols;
+
+        // Fill with the initial color (packed BGRA)
+        std::fill(ptr, ptr + total, _init_color.dword);
     }
 
     void PutPixel(int x, int y, const open_3d::Color color) {
@@ -194,29 +150,56 @@ private:
         DrawLine(p1.x, p1.y, p2.x, p2.y, c);
     }
 
-    void ClearFrame() {
-        // Interpret the canvas as 32-bit pixels (CV_8UC4 assumed)
-        uint32_t* ptr = _canvas.ptr<uint32_t>(0);
+private:
+    const std::string _window_name{};
+    const int _frame_width{};
+    const int _frame_height{};
+    const open_3d::Color _init_color{ open_3d::Colors::Black };
 
-        // Total number of pixels
-        size_t total = _canvas.rows * _canvas.cols;
+    cv::Mat _canvas;
+};
 
-        // Fill with the initial color (packed BGRA)
-        std::fill(ptr, ptr + total, _init_color.dword);
+class Game {
+public:
+    Game(const std::string window_name, const int frame_width, const int frame_height)
+        : _gfx(window_name, frame_width, frame_height) {}
+
+    ~Game() = default;
+
+    void Go() {
+
+        InitModel();
+
+        while (_main_loop_active) {
+
+            _gfx.BeginFrame();
+
+            UpdateModel();
+            ComposeFrame();
+
+            _gfx.EndFrame();
+            ManageInputs(_gfx.GetInput());
+        }
+
     }
 
-    void BeginFrame() {
-        ClearFrame();
-    }
+private:
+    Graphics _gfx;
+    bool _main_loop_active{ true };
 
-    void EndFrame() {
-        cv::imshow(_window_name, _canvas);
-    }
+    /********************************/
+    /*  User Variables              */
+    std::vector<open_3d::Vec2> star;
+    float theta = 0.0f;
+    static constexpr float vRot = open_3d::PI / 60.0f;
+    static constexpr float radInner = 1.0f;
+    static constexpr float radOuter = 2.0f;
+    static constexpr int nflares = 5;
+    static constexpr float size = 100.0f;
+    /********************************/
 
-    void GetIO() {
-        const int key = cv::waitKey(0); // waits indefinitely for a key press
-        //std::cout << "Key code: " << key << ", Char : " << static_cast<char>(key) << "\n";
-
+private:
+    void ManageInputs(const int key) {
         switch (key) {
         case -1:
         case 27:
@@ -241,14 +224,49 @@ private:
             break;
         }
     }
+
+    void InitModel() {
+        const float dTheta = 2.0f * open_3d::PI / float(nflares * 2);
+        for (int i = 0; i < nflares * 2; i++)
+        {
+            const float rad = (i % 2 == 0) ? radOuter : radInner;
+            star.emplace_back(
+                rad * cos(float(i) * dTheta),
+                rad * sin(float(i) * dTheta)
+            );
+        }
+    }
+
+    void UpdateModel() {
+        theta += vRot;
+    }
+
+    void ComposeFrame() {
+        const open_3d::Color model_color = open_3d::Colors::White;
+
+        const open_3d::Vec2 trl = { float(_gfx.GetFrameWidth()) / 2.0f,float(_gfx.GetFrameHeight()) / 2.0f };
+        const open_3d::Mat2 trf = open_3d::Mat2::Rotation(theta) * open_3d::Mat2::Scaling(size);
+        auto vtx(star);
+        for (auto& v : vtx)
+        {
+            v *= trf;
+            v += trl;
+        }
+        for (auto i = vtx.cbegin(), end = std::prev(vtx.cend()); i != end; i++)
+        {
+            _gfx.DrawLine(*i, *std::next(i), model_color);
+        }
+        _gfx.DrawLine(vtx.front(), vtx.back(), model_color);
+    }
 };
+
 
 int main() {
     const int frame_width{ 640 };
     const int frame_height{ 480 };
     
-    Graphics graphics{"3D Programming Fundamentals", frame_width, frame_height};
-    graphics.Loop();
+    Game game{"3D Programming Fundamentals", frame_width, frame_height};
+    game.Go();
 
     return 0;
 }
