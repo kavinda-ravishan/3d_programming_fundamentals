@@ -29,7 +29,6 @@ void Graphics::EndFrame() {
 
 int Graphics::GetInput() {
     const int key = cv::waitKey(0); // waits indefinitely for a key press
-    //std::cout << "Key code: " << key << ", Char : " << static_cast<char>(key) << "\n";
     return key;
 }
 

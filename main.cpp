@@ -1,6 +1,4 @@
 #include <string>
-#include <iostream>
-#include <vector>
 
 #include "Graphics.hpp"
 #include "PC3Transformer.hpp"
