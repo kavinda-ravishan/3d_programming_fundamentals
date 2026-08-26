@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include <string>
-#include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/core/utils/logger.hpp> // Required header
-
 #include "Vec.hpp"
 #include "Colors.hpp"
+
+namespace cv {
+    class Mat;
+}
 
 class Graphics {
 public:
@@ -40,5 +41,5 @@ private:
     const int _frame_height{};
     const open_3d::Color _init_color{ open_3d::Colors::Black };
 
-    cv::Mat _canvas;
+    std::unique_ptr<cv::Mat> _canvas;
 };

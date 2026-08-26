@@ -1,11 +1,14 @@
 #include <cassert>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core/utils/logger.hpp> // Required header
 #include "Graphics.hpp"
 
 Graphics::Graphics(const std::string window_name, const int frame_width, const int frame_height)
     : _window_name(window_name), _frame_width(frame_width), _frame_height(frame_height) {
 
     cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
-    _canvas = cv::Mat(_frame_height, _frame_width, CV_8UC4);
+    _canvas = std::make_unique<cv::Mat>(_frame_height, _frame_width, CV_8UC4);
     cv::namedWindow(_window_name, cv::WINDOW_AUTOSIZE);
 }
 
@@ -21,7 +24,7 @@ void Graphics::BeginFrame() {
 }
 
 void Graphics::EndFrame() {
-    cv::imshow(_window_name, _canvas);
+    cv::imshow(_window_name, *_canvas);
 }
 
 int Graphics::GetInput() {
@@ -32,10 +35,10 @@ int Graphics::GetInput() {
 
 void Graphics::ClearFrame() {
     // Interpret the canvas as 32-bit pixels (CV_8UC4 assumed)
-    uint32_t* ptr = _canvas.ptr<uint32_t>(0);
+    uint32_t* ptr = _canvas->ptr<uint32_t>(0);
 
     // Total number of pixels
-    size_t total = _canvas.rows * _canvas.cols;
+    size_t total = _canvas->rows * _canvas->cols;
 
     // Fill with the initial color (packed BGRA)
     std::fill(ptr, ptr + total, _init_color.dword);
@@ -48,7 +51,7 @@ void Graphics::PutPixel(int x, int y, const open_3d::Color color) {
     assert(y < _frame_height);
 
     // Pointer to the pixel (BGRA order in OpenCV)
-    uint32_t* ptr = _canvas.ptr<uint32_t>(y);
+    uint32_t* ptr = _canvas->ptr<uint32_t>(y);
     ptr[x] = color.dword;
 }
 
@@ -58,7 +61,7 @@ open_3d::Color Graphics::GetPixel(int x, int y) const {
     assert(x < _frame_width);
     assert(y < _frame_height);
 
-    const uint32_t* ptr = _canvas.ptr<uint32_t>(y);
+    const uint32_t* ptr = _canvas->ptr<uint32_t>(y);
     return ptr[x];
 }
 
