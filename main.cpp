@@ -32,8 +32,6 @@ public:
 private:
     Graphics _gfx;
 
-
-
     /********************************/
 /*  User Variables              */
     open_3d::PC3Transformer _pc3t;
