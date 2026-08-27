@@ -3,6 +3,7 @@
 #include "Graphics.hpp"
 #include "PC3Transformer.hpp"
 #include "Cube.hpp"
+#include "Mat3.hpp"
 
 class Game {
 public:
@@ -31,13 +32,25 @@ public:
 private:
     Graphics _gfx;
 
+
+
+    /********************************/
+/*  User Variables              */
     open_3d::PC3Transformer _pc3t;
     open_3d::Cube _cube;
+    static constexpr float _delta_theta = open_3d::PI;
+    float _theta_x = 0.0f;
+    float _theta_y = 0.0f;
+    float _theta_z = 0.0f;
+    /********************************/
 
     bool _main_loop_active{ true };
 
 private:
     void ManageInputs(const int key) {
+
+        const float dt = 1.0f / 60.0f;
+
         switch (key) {
         case -1:
         case 27:
@@ -46,18 +59,26 @@ private:
             _main_loop_active = false;
             break;
         }
-        case 'a':
-            break;
-        case 'd':
-            break;
-        case 's':
+
+        case 'q':
+            _theta_x = open_3d::wrap_angle(_theta_x + _delta_theta * dt);
             break;
         case 'w':
-            break;
-        case 'q':
+            _theta_y = open_3d::wrap_angle(_theta_y + _delta_theta * dt);
             break;
         case 'e':
+            _theta_z = open_3d::wrap_angle(_theta_z + _delta_theta * dt);
             break;
+        case 'a':
+            _theta_x = open_3d::wrap_angle(_theta_x - _delta_theta * dt);
+            break;
+        case 's':
+            _theta_y = open_3d::wrap_angle(_theta_y - _delta_theta * dt);
+            break;
+        case 'd':
+            _theta_z = open_3d::wrap_angle(_theta_z - _delta_theta * dt);
+            break;
+
         default:
             break;
         }
@@ -72,12 +93,20 @@ private:
     void ComposeFrame() {
         auto lines = _cube.GetLines();
 
-        for (auto& v : lines.vertices) {
-            v += {0.0f, 0.0f, 1.0f};
+        const open_3d::Mat3 rot =
+            open_3d::Mat3::RotationX(_theta_x) *
+            open_3d::Mat3::RotationY(_theta_y) *
+            open_3d::Mat3::RotationZ(_theta_z);
+        for (auto& v : lines.vertices)
+        {
+            v *= rot;
+            v += { 0.0f, 0.0f, 1.0f };
             _pc3t.Transform(v);
         }
-
-        for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2)) {
+        for (auto i = lines.indices.cbegin(),
+            end = lines.indices.cend();
+            i != end; std::advance(i, 2))
+        {
             _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::White);
         }
 
