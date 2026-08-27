@@ -37,7 +37,7 @@ private:
     open_3d::PC3Transformer _pc3t;
     open_3d::Cube _cube;
     static constexpr float _delta_theta = open_3d::PI;
-    float _scale = 1.0f;
+    float _offset_z = 2.0f;
     float _theta_x = 0.0f;
     float _theta_y = 0.0f;
     float _theta_z = 0.0f;
@@ -49,7 +49,6 @@ private:
     void ManageInputs(const int key) {
 
         constexpr float dt = 1.0f / 60.0f;
-        constexpr float ds = 1.0f / 60.0f;
 
         switch (key) {
         case -1:
@@ -80,10 +79,10 @@ private:
             break;
 
         case 'x':
-            _scale = _scale + ds;
+            _offset_z += 2.0f * dt;
             break;
         case 'z':
-            _scale = std::max(_scale - ds, 0.0f);
+            _offset_z -= 2.0f * dt;
             break;
 
         default:
@@ -105,20 +104,14 @@ private:
             open_3d::Mat3::RotationY(_theta_y) *
             open_3d::Mat3::RotationZ(_theta_z);
 
-        const open_3d::Mat3 scl = open_3d::Mat3::Scaling(_scale);
-
         for (auto& v : lines.vertices)
         {
             v *= rot;
-            v *= scl;
-
-            v += { 0.0f, 0.0f, 1.0f };
+            v += { 0.0f, 0.0f, _offset_z };
 
             _pc3t.Transform(v);
         }
-        for (auto i = lines.indices.cbegin(),
-            end = lines.indices.cend();
-            i != end; std::advance(i, 2))
+        for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2))
         {
             _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::White);
         }

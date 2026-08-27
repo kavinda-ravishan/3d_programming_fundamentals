@@ -9,15 +9,17 @@ namespace open_3d {
 	public:
 		PC3Transformer(const int frame_width, const int frame_height)
 			:
-			xFactor(float(frame_width) / 2.0f),
-			yFactor(float(frame_height) / 2.0f)
+			_x_factor(float(frame_width) / 2.0f),
+			_y_factor(float(frame_height) / 2.0f)
 		{
 		}
 		// PC3 -> screen coordinate
 		Vec3& Transform(Vec3& v) const
 		{
-			v.x = (v.x + 1.0f) * xFactor;
-			v.y = (-v.y + 1.0f) * yFactor;
+			const float z_inv = 1 / v.z;
+
+			v.x = ((v.x * z_inv) + 1.0f) * _x_factor;
+			v.y = (-(v.y * z_inv) + 1.0f) * _y_factor;
 			return v;
 		}
 		// PC3 -> screen coordinate
@@ -27,7 +29,7 @@ namespace open_3d {
 			return Transform(vec3);
 		}
 	private:
-		float xFactor;
-		float yFactor;
+		float _x_factor;
+		float _y_factor;
 	};
 } // namespace open_3d
