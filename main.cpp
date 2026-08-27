@@ -33,7 +33,7 @@ private:
     Graphics _gfx;
 
     /********************************/
-/*  User Variables              */
+    /*  User Variables              */
     open_3d::PC3Transformer _pc3t;
     open_3d::Cube _cube;
     static constexpr float _delta_theta = open_3d::PI;
@@ -90,11 +90,9 @@ private:
         }
     }
 
-    void InitModel() {
-    }
+    void InitModel() {}
 
-    void UpdateModel() {
-    }
+    void UpdateModel() {}
 
     void ComposeFrame() {
         auto lines = _cube.GetLines();
