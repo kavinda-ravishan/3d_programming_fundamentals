@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vec2.hpp"
+#include "Math.hpp"
 
 namespace open_3d {
 

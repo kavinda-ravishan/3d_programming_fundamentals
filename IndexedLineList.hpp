@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Vec.hpp"
+#include "Vec3.hpp"
 
 namespace open_3d {
 

@@ -155,12 +155,10 @@
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="IndexedLineList.hpp" />
-    <ClInclude Include="Mat.hpp" />
     <ClInclude Include="Mat2.hpp" />
     <ClInclude Include="Mat3.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
-    <ClInclude Include="Vec.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
   </ItemGroup>

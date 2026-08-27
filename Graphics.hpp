@@ -2,7 +2,7 @@
 
 #include <memory>
 #include <string>
-#include "Vec.hpp"
+#include "Vec2.hpp"
 #include "Colors.hpp"
 
 namespace cv {
