@@ -39,6 +39,7 @@ private:
     open_3d::PC3Transformer _pc3t;
     open_3d::Cube _cube;
     static constexpr float _delta_theta = open_3d::PI;
+    float _scale = 1.0f;
     float _theta_x = 0.0f;
     float _theta_y = 0.0f;
     float _theta_z = 0.0f;
@@ -50,6 +51,7 @@ private:
     void ManageInputs(const int key) {
 
         const float dt = 1.0f / 60.0f;
+        const float ds = 1.0f / 60.0f;
 
         switch (key) {
         case -1:
@@ -79,6 +81,13 @@ private:
             _theta_z = open_3d::wrap_angle(_theta_z - _delta_theta * dt);
             break;
 
+        case 'x':
+            _scale = _scale + ds;
+            break;
+        case 'z':
+            _scale = _scale - ds;
+            break;
+
         default:
             break;
         }
@@ -97,10 +106,16 @@ private:
             open_3d::Mat3::RotationX(_theta_x) *
             open_3d::Mat3::RotationY(_theta_y) *
             open_3d::Mat3::RotationZ(_theta_z);
+
+        const open_3d::Mat3 scl = open_3d::Mat3::Scaling(_scale);
+
         for (auto& v : lines.vertices)
         {
             v *= rot;
+            v *= scl;
+
             v += { 0.0f, 0.0f, 1.0f };
+
             _pc3t.Transform(v);
         }
         for (auto i = lines.indices.cbegin(),
