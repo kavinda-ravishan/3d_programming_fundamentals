@@ -50,8 +50,8 @@ private:
 private:
     void ManageInputs(const int key) {
 
-        const float dt = 1.0f / 60.0f;
-        const float ds = 1.0f / 60.0f;
+        constexpr float dt = 1.0f / 60.0f;
+        constexpr float ds = 1.0f / 60.0f;
 
         switch (key) {
         case -1:
@@ -85,7 +85,7 @@ private:
             _scale = _scale + ds;
             break;
         case 'z':
-            _scale = _scale - ds;
+            _scale = std::max(_scale - ds, 0.0f);
             break;
 
         default:
