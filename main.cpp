@@ -95,22 +95,51 @@ private:
     void UpdateModel() {}
 
     void ComposeFrame() {
-        auto lines = _cube.GetLines();
+
+        constexpr open_3d::Color colors[12] = {
+            open_3d::Colors::White,
+            open_3d::Colors::Blue,
+            open_3d::Colors::Cyan,
+            open_3d::Colors::Gray,
+            open_3d::Colors::Green,
+            open_3d::Colors::Magenta,
+            open_3d::Colors::LightGray,
+            open_3d::Colors::Red,
+            open_3d::Colors::Yellow,
+            open_3d::Colors::White,
+            open_3d::Colors::Blue,
+            open_3d::Colors::Cyan
+        };
 
         const open_3d::Mat3 rot =
             open_3d::Mat3::RotationX(_theta_x) *
             open_3d::Mat3::RotationY(_theta_y) *
             open_3d::Mat3::RotationZ(_theta_z);
 
-        for (auto& v : lines.vertices)
-        {
+        auto triangles = _cube.GetTriangles();
+        for (auto& v : triangles.vertices) {
             v *= rot;
             v += { 0.0f, 0.0f, _offset_z };
 
             _pc3t.Transform(v);
         }
-        for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2))
-        {
+        for (auto i = triangles.indices.cbegin(); i != triangles.indices.cend(); std::advance(i, 3)) {
+            _gfx.DrawTriangle(
+                triangles.vertices[*i], 
+                triangles.vertices[*std::next(i)], 
+                triangles.vertices[*std::next(i, 2)], 
+                colors[std::distance(triangles.indices.cbegin(), i) / 3]
+            );
+        }
+
+        auto lines = _cube.GetLines();
+        for (auto& v : lines.vertices) {
+            v *= rot;
+            v += { 0.0f, 0.0f, _offset_z };
+
+            _pc3t.Transform(v);
+        }
+        for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2)) {
             _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::White);
         }
 

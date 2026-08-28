@@ -155,6 +155,7 @@
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="IndexedLineList.hpp" />
+    <ClInclude Include="IndexedTriangleList.hpp" />
     <ClInclude Include="Mat2.hpp" />
     <ClInclude Include="Mat3.hpp" />
     <ClInclude Include="Math.hpp" />
