@@ -140,7 +140,7 @@ private:
             _pc3t.Transform(v);
         }
         for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2)) {
-            _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::White);
+            _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::Black);
         }
 
     }
