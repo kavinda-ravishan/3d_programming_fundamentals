@@ -41,13 +41,13 @@ namespace open_3d {
 			z /= length;
 			return *this;
 		}
-		_Vec3	GetNormalized() const
+		_Vec3 GetNormalized() const
 		{
 			_Vec3 norm = *this;
 			norm.Normalize();
 			return norm;
 		}
-		_Vec3	operator-() const
+		_Vec3 operator-() const
 		{
 			return _Vec3(-this->x, -this->y, -z);
 		}
@@ -72,15 +72,15 @@ namespace open_3d {
 			z -= rhs.z;
 			return *this;
 		}
-		T		operator*(const _Vec3& rhs) const
+		T operator*(const _Vec3& rhs) const
 		{
 			return this->x * rhs.x + this->y * rhs.y + z * rhs.z;
 		}
-		_Vec3	operator+(const _Vec3& rhs) const
+		_Vec3 operator+(const _Vec3& rhs) const
 		{
 			return _Vec3(*this) += rhs;
 		}
-		_Vec3	operator-(const _Vec3& rhs) const
+		_Vec3 operator-(const _Vec3& rhs) const
 		{
 			return _Vec3(*this) -= rhs;
 		}
@@ -91,9 +91,16 @@ namespace open_3d {
 			z *= rhs;
 			return *this;
 		}
-		_Vec3	operator*(const T& rhs) const
+		_Vec3 operator*(const T& rhs) const
 		{
 			return _Vec3(*this) *= rhs;
+		}
+		_Vec3 operator%(const _Vec3& rhs) const
+		{
+			return _Vec3(
+				this->y * rhs.z - this->z * rhs.y,
+				this->z * rhs.x - this->x * rhs.z,
+				this->x * rhs.y - this->y * rhs.x);
 		}
 		_Vec3& operator/=(const T& rhs)
 		{
@@ -102,15 +109,15 @@ namespace open_3d {
 			z /= rhs;
 			return *this;
 		}
-		_Vec3	operator/(const T& rhs) const
+		_Vec3 operator/(const T& rhs) const
 		{
 			return _Vec3(*this) /= rhs;
 		}
-		bool	operator==(const _Vec3& rhs) const
+		bool operator==(const _Vec3& rhs) const
 		{
 			return this->x == rhs.x && this->y == rhs.y && rhs.z == z;
 		}
-		bool	operator!=(const _Vec3& rhs) const
+		bool operator!=(const _Vec3& rhs) const
 		{
 			return !(*this == rhs);
 		}

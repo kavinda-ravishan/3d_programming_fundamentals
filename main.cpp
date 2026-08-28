@@ -36,6 +36,7 @@ private:
     /*  User Variables              */
     open_3d::PC3Transformer _pc3t;
     open_3d::Cube _cube;
+    bool _add_wireframe{ false };
     static constexpr float _delta_theta = open_3d::PI;
     float _offset_z = 2.0f;
     float _theta_x = 0.0f;
@@ -58,6 +59,12 @@ private:
             _main_loop_active = false;
             break;
         }
+        case 9: // TAB key
+            break;
+
+        case 'c': // TAB key
+            _add_wireframe = !_add_wireframe;
+            break;
 
         case 'q':
             _theta_x = open_3d::wrap_angle(_theta_x + _delta_theta * dt);
@@ -111,36 +118,53 @@ private:
             open_3d::Colors::Cyan
         };
 
+        // generate rotation matrix from euler angles
         const open_3d::Mat3 rot =
             open_3d::Mat3::RotationX(_theta_x) *
             open_3d::Mat3::RotationY(_theta_y) *
             open_3d::Mat3::RotationZ(_theta_z);
-
         auto triangles = _cube.GetTriangles();
+        // transform from model space -> world (/view) space
         for (auto& v : triangles.vertices) {
             v *= rot;
             v += { 0.0f, 0.0f, _offset_z };
+        }
+        // backface culling test (must be done in world (/view) space)
+        for (size_t i = 0; i < triangles.indices.size() / 3; i++) {
+            const open_3d::Vec3& v0 = triangles.vertices[triangles.indices[i * 3]];
+            const open_3d::Vec3& v1 = triangles.vertices[triangles.indices[i * 3 + 1]];
+            const open_3d::Vec3& v2 = triangles.vertices[triangles.indices[i * 3 + 2]];
 
+            triangles.call_flags[i] = (v1 - v0) % (v2 - v0) * v0 >= 0.0f;
+        }
+        // transform to screen space (includes perspective transform)
+        for (auto& v : triangles.vertices) {
             _pc3t.Transform(v);
         }
-        for (auto i = triangles.indices.cbegin(); i != triangles.indices.cend(); std::advance(i, 3)) {
-            _gfx.DrawTriangle(
-                triangles.vertices[*i], 
-                triangles.vertices[*std::next(i)], 
-                triangles.vertices[*std::next(i, 2)], 
-                colors[std::distance(triangles.indices.cbegin(), i) / 3]
-            );
+        // draw the mf triangles!
+        for (size_t i = 0; i < triangles.indices.size() / 3; i++) {
+            // skip triangles previously determined to be back-facing
+            if (!triangles.call_flags[i]) {
+                _gfx.DrawTriangle(
+                    triangles.vertices[triangles.indices[i * 3]],
+                    triangles.vertices[triangles.indices[i * 3 + 1]],
+                    triangles.vertices[triangles.indices[i * 3 + 2]],
+                    colors[i]
+                );
+            }
         }
 
-        auto lines = _cube.GetLines();
-        for (auto& v : lines.vertices) {
-            v *= rot;
-            v += { 0.0f, 0.0f, _offset_z };
+        if (_add_wireframe) {
+            auto lines = _cube.GetLines();
+            for (auto& v : lines.vertices) {
+                v *= rot;
+                v += { 0.0f, 0.0f, _offset_z };
 
-            _pc3t.Transform(v);
-        }
-        for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2)) {
-            _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::Black);
+                _pc3t.Transform(v);
+            }
+            for (auto i = lines.indices.cbegin(); i != lines.indices.cend(); std::advance(i, 2)) {
+                _gfx.DrawLine(lines.vertices[*i], lines.vertices[*std::next(i)], open_3d::Colors::White);
+            }
         }
 
     }
