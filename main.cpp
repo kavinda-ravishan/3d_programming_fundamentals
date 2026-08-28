@@ -62,7 +62,7 @@ private:
         case 9: // TAB key
             break;
 
-        case 'c': // TAB key
+        case 'c':
             _add_wireframe = !_add_wireframe;
             break;
 
