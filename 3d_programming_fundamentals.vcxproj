@@ -160,6 +160,8 @@
     <ClInclude Include="Mat3.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
+    <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SolidCubeScene.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
   </ItemGroup>
