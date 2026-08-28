@@ -152,7 +152,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.hpp" />
+    <ClInclude Include="ConcaveHexahedron.hpp" />
+    <ClInclude Include="ConHexScene.hpp" />
     <ClInclude Include="Cube.hpp" />
+    <ClInclude Include="CubeOrderScene.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="IndexedLineList.hpp" />
     <ClInclude Include="IndexedTriangleList.hpp" />
@@ -164,6 +167,8 @@
     <ClInclude Include="SolidCubeScene.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
+    <ClInclude Include="XMutualScene.hpp" />
+    <ClInclude Include="XQuads.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

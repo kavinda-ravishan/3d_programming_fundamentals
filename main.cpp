@@ -4,6 +4,9 @@
 
 #include "Graphics.hpp"
 #include "SolidCubeScene.hpp"
+#include "CubeOrderScene.hpp"
+#include "ConHexScene.hpp"
+#include "XMutualScene.hpp"
 
 class Game {
 public:
@@ -11,14 +14,15 @@ public:
         : _gfx(window_name, frame_width, frame_height) {
     
         scenes.push_back(std::make_unique<SolidCubeScene>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<CubeOrderScene>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<ConHexScene>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<XMutualScene>(frame_width, frame_height));
         curr_scene = scenes.begin();
     }
 
     ~Game() = default;
 
     void Go() {
-
-
         while (_main_loop_active) {
             _gfx.BeginFrame();
 
@@ -28,7 +32,6 @@ public:
 
             UpdateModel();
         }
-
     }
 
 private:
@@ -47,8 +50,9 @@ private:
     void CycleScenes() {
         if (++curr_scene == scenes.end()) {
             curr_scene = scenes.begin();
-            std::cout << "Cycling scene to : " << (*curr_scene)->GetSceneName() << "\n";
         }
+        
+        std::cout << "Cycling scene to : " << (*curr_scene)->GetSceneName() << "\n";
     }
 
     void ManageInputs(const int key) {
