@@ -5,15 +5,13 @@
 #include "Mat3.hpp"
 #include "Scene.hpp"
 
-class ConHexScene : public Scene
+class SceneConHex : public Scene
 {
 public:
-    ConHexScene(const int frame_width, const int frame_height)
-        : Scene(frame_width, frame_height), _pc3t(frame_width, frame_height) {}
+    SceneConHex(const int frame_width, const int frame_height)
+        : Scene(frame_width, frame_height, "ConHex"), _pc3t(frame_width, frame_height) {}
 
-    ~ConHexScene() = default;
-
-    const char* GetSceneName() { return "ConHex"; }
+    ~SceneConHex() = default;
 
     virtual void Update(const int key, const float dt) override {
         switch (key) {
@@ -128,7 +126,7 @@ public:
                 const open_3d::Vec3& v0 = triangles.vertices[triangles.indices[i * 3]];
                 const open_3d::Vec3& v1 = triangles.vertices[triangles.indices[i * 3 + 1]];
                 const open_3d::Vec3& v2 = triangles.vertices[triangles.indices[i * 3 + 2]];
-                triangles.call_flags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.0f;
+                triangles.cull_flags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.0f;
             }
             // transform to screen space (includes perspective transform)
             for (auto& v : triangles.vertices)
@@ -141,7 +139,7 @@ public:
                 i < end; i++)
             {
                 // skip triangles previously determined to be back-facing
-                if (!triangles.call_flags[i])
+                if (!triangles.cull_flags[i])
                 {
                     gfx.DrawTriangle(
                         triangles.vertices[triangles.indices[i * 3]],

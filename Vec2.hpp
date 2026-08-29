@@ -40,13 +40,13 @@ namespace open_3d {
 			y /= length;
 			return *this;
 		}
-		_Vec2	GetNormalized() const
+		_Vec2 GetNormalized() const
 		{
 			_Vec2 norm = *this;
 			norm.Normalize();
 			return norm;
 		}
-		_Vec2	operator-() const
+		_Vec2 operator-() const
 		{
 			return _Vec2(-x, -y);
 		}
@@ -68,15 +68,15 @@ namespace open_3d {
 			y -= rhs.y;
 			return *this;
 		}
-		T		operator*(const _Vec2& rhs) const
+		T operator*(const _Vec2& rhs) const
 		{
 			return x * rhs.x + y * rhs.y;
 		}
-		_Vec2	operator+(const _Vec2& rhs) const
+		_Vec2 operator+(const _Vec2& rhs) const
 		{
 			return _Vec2(*this) += rhs;
 		}
-		_Vec2	operator-(const _Vec2& rhs) const
+		_Vec2 operator-(const _Vec2& rhs) const
 		{
 			return _Vec2(*this) -= rhs;
 		}
@@ -96,17 +96,21 @@ namespace open_3d {
 			y /= rhs;
 			return *this;
 		}
-		_Vec2	operator/(const T& rhs) const
+		_Vec2 operator/(const T& rhs) const
 		{
 			return _Vec2(*this) /= rhs;
 		}
-		bool	operator==(const _Vec2& rhs) const
+		bool operator==(const _Vec2& rhs) const
 		{
 			return x == rhs.x && y == rhs.y;
 		}
-		bool	operator!=(const _Vec2& rhs) const
+		bool operator!=(const _Vec2& rhs) const
 		{
 			return !(*this == rhs);
+		}
+		_Vec2 InterpolateTo(const _Vec2& dest, T alpha) const
+		{
+			return *this + (dest - *this) * alpha;
 		}
 	public:
 		T x;

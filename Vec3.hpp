@@ -121,6 +121,10 @@ namespace open_3d {
 		{
 			return !(*this == rhs);
 		}
+		_Vec3 InterpolateTo(const _Vec3& dest, T alpha) const
+		{
+			return *this + (dest - *this) * alpha;
+		}
 	public:
 		T z;
 	};

@@ -4,10 +4,8 @@
 #include <string>
 #include "Vec2.hpp"
 #include "Colors.hpp"
-
-namespace cv {
-    class Mat;
-}
+#include "Surface.hpp"
+#include "TexVertex.hpp"
 
 class Graphics {
 public:
@@ -31,6 +29,9 @@ public:
 
     // Triangle Rasterization
     void DrawTriangle(const open_3d::Vec2& v0, const open_3d::Vec2& v1, const open_3d::Vec2& v2, open_3d::Color c);
+    void DrawTriangleTex(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+    void DrawTriangleTexWrap(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+
 private:
     void ClearFrame();
 
@@ -38,11 +39,19 @@ private:
     void DrawFlatTopTriangle(const open_3d::Vec2& v0, const open_3d::Vec2& v1, const open_3d::Vec2& v2, open_3d::Color c);
     void DrawFlatBottomTriangle(const open_3d::Vec2& v0, const open_3d::Vec2& v1, const open_3d::Vec2& v2, open_3d::Color c);
 
+    void DrawFlatTriangleTex(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex,
+        const open_3d::TexVertex& dv0, const open_3d::TexVertex& dv1, open_3d::TexVertex& itEdge1);
+    void DrawFlatTopTriangleTex(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+    void DrawFlatBottomTriangleTex(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+
+    void DrawFlatTopTriangleTexWrap(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+    void DrawFlatBottomTriangleTexWrap(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex);
+    void DrawFlatTriangleTexWrap(const open_3d::TexVertex& v0, const open_3d::TexVertex& v1, const open_3d::TexVertex& v2, const Surface& tex,
+        const open_3d::TexVertex& dv0, const open_3d::TexVertex& dv1, open_3d::TexVertex& itEdge1);
+
 private:
     const std::string _window_name{};
-    const int _frame_width{};
-    const int _frame_height{};
     const open_3d::Color _init_color{ open_3d::Colors::Black };
 
-    std::unique_ptr<cv::Mat> _canvas;
+    Surface _canvas;
 };

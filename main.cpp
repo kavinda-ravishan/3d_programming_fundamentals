@@ -3,20 +3,37 @@
 #include <iostream>
 
 #include "Graphics.hpp"
-#include "SolidCubeScene.hpp"
-#include "CubeOrderScene.hpp"
-#include "ConHexScene.hpp"
-#include "XMutualScene.hpp"
+#include "SceneSolidCube.hpp"
+#include "SceneCubeOrder.hpp"
+#include "SceneConHex.hpp"
+#include "SceneXMutual.hpp"
+#include "SceneTexCube.hpp"
+#include "SceneTexWrapCube.hpp"
+#include "SceneFoldedCube.hpp"
+#include "SceneFoldedCubeWrap.hpp"
+#include "SceneCubeSkinned.hpp"
 
 class Game {
 public:
     Game(const std::string window_name, const int frame_width, const int frame_height)
         : _gfx(window_name, frame_width, frame_height) {
     
-        scenes.push_back(std::make_unique<SolidCubeScene>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<CubeOrderScene>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<ConHexScene>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<XMutualScene>(frame_width, frame_height));
+        const std::string sauron_img_path = "Images\\sauron.png";
+        const std::string dice_skin_img_path = "Images\\dice_skin.png";
+        const std::string office_skin_img_path = "Images\\office_skin.jpg";
+
+        scenes.push_back(std::make_unique<SceneSolidCube>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<SceneCubeOrder>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<SceneConHex>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<SceneXMutual>(frame_width, frame_height));
+        scenes.push_back(std::make_unique<SceneTexCube>(frame_width, frame_height, sauron_img_path, 1.0f));
+        scenes.push_back(std::make_unique<SceneTexCube>(frame_width, frame_height, sauron_img_path, 2.0f));
+        scenes.push_back(std::make_unique<SceneTexWrapCube>(frame_width, frame_height, sauron_img_path, 1.0f));
+        scenes.push_back(std::make_unique<SceneTexWrapCube>(frame_width, frame_height, sauron_img_path, 2.0f));
+        scenes.push_back(std::make_unique<SceneFoldedCube>(frame_width, frame_height, sauron_img_path));
+        scenes.push_back(std::make_unique<SceneFoldedCubeWrap>(frame_width, frame_height, sauron_img_path));
+        scenes.push_back(std::make_unique<SceneCubeSkinned>(frame_width, frame_height, dice_skin_img_path));
+        scenes.push_back(std::make_unique<SceneCubeSkinned>(frame_width, frame_height, office_skin_img_path));
         curr_scene = scenes.begin();
     }
 
@@ -87,9 +104,14 @@ private:
 int main() {
     const int frame_width{ 640 };
     const int frame_height{ 640 };
+    const char* window_name = "3D Programming Fundamentals";
     
-    Game game{"3D Programming Fundamentals", frame_width, frame_height};
-    game.Go();
+    try {
+        Game game{window_name, frame_width, frame_height};
+        game.Go();
+    } catch(std::exception ex) {
+        std::cout << "Exception occered : " << ex.what() << "\n";
+    }
 
     return 0;
 }

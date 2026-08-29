@@ -1,20 +1,25 @@
 #pragma once
+#include <string>
 #include "Graphics.hpp"
 #include "PC3Transformer.hpp"
-#include "XQuads.hpp"
+#include "CubeSkinned.hpp"
 #include "Mat3.hpp"
 #include "Scene.hpp"
 
-class XMutualScene : public Scene
+class SceneCubeSkinned : public Scene
 {
 public:
-    XMutualScene(const int frame_width, const int frame_height)
-        : Scene(frame_width, frame_height), _pc3t(frame_width, frame_height) {
-    }
+    SceneCubeSkinned(const int frame_width, const int frame_height, const std::string texture_path)
+        :
+        Scene(
+            frame_width,
+            frame_height,
+            std::string("Folded Textured Clamped Cube ") + texture_path
+        ),
+        _pc3t(frame_width, frame_height),
+        _tex(texture_path) {}
 
-    ~XMutualScene() = default;
-
-    const char* GetSceneName() { return "XMutual"; }
+    ~SceneCubeSkinned() = default;
 
     virtual void Update(const int key, const float dt) override {
         switch (key) {
@@ -50,9 +55,9 @@ public:
     }
 
     virtual void Draw(Graphics& gfx) const override {
-
+        // NOTE: Changes had to be made because of Vec3 -> TexVertex
         // generate indexed triangle list
-        auto triangles = hex.GetTriangles();
+        auto triangles = _cube.GetTrianglesTex();
         // generate rotation matrix from euler angles
         const open_3d::Mat3 rot =
             open_3d::Mat3::RotationX(_theta_x) *
@@ -61,23 +66,23 @@ public:
         // transform from model space -> world (/view) space
         for (auto& v : triangles.vertices)
         {
-            v *= rot;
-            v += { 0.0f, 0.0f, _offset_z };
+            v.pos *= rot;
+            v.pos += { 0.0f, 0.0f, _offset_z };
         }
         // backface culling test (must be done in world (/view) space)
         for (size_t i = 0,
             end = triangles.indices.size() / 3;
             i < end; i++)
         {
-            const open_3d::Vec3& v0 = triangles.vertices[triangles.indices[i * 3]];
-            const open_3d::Vec3& v1 = triangles.vertices[triangles.indices[i * 3 + 1]];
-            const open_3d::Vec3& v2 = triangles.vertices[triangles.indices[i * 3 + 2]];
-            triangles.call_flags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.0f;
+            const open_3d::Vec3& v0 = triangles.vertices[triangles.indices[i * 3]].pos;
+            const open_3d::Vec3& v1 = triangles.vertices[triangles.indices[i * 3 + 1]].pos;
+            const open_3d::Vec3& v2 = triangles.vertices[triangles.indices[i * 3 + 2]].pos;
+            triangles.cull_flags[i] = (v1 - v0) % (v2 - v0) * v0 > 0.0f;
         }
         // transform to screen space (includes perspective transform)
         for (auto& v : triangles.vertices)
         {
-            _pc3t.Transform(v);
+            _pc3t.Transform(v.pos);
         }
         // draw the mf triangles!
         for (size_t i = 0,
@@ -85,27 +90,22 @@ public:
             i < end; i++)
         {
             // skip triangles previously determined to be back-facing
-            if (!triangles.call_flags[i])
+            if (!triangles.cull_flags[i])
             {
-                gfx.DrawTriangle(
+                gfx.DrawTriangleTex(
                     triangles.vertices[triangles.indices[i * 3]],
                     triangles.vertices[triangles.indices[i * 3 + 1]],
                     triangles.vertices[triangles.indices[i * 3 + 2]],
-                    colors[i]);
+                    _tex);
             }
         }
     }
 
 private:
     open_3d::PC3Transformer _pc3t;
-    open_3d::XQuads hex{ 1.0f };
+    Surface _tex;
 
-    static constexpr open_3d::Color colors[] = {
-        open_3d::Colors::Red,
-        open_3d::Colors::Red,
-        open_3d::Colors::Yellow,
-        open_3d::Colors::Yellow,
-    };
+    open_3d::CubeSkinned _cube{ 1.0f };
 
     static constexpr float _delta_theta = open_3d::PI;
     float _offset_z = 2.0f;
