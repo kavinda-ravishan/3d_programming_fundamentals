@@ -40,9 +40,9 @@ namespace open_3d {
 			vertices.emplace_back(-side, -side, side); // 11
 			tc.emplace_back(2.0f, 2.0f);
 			vertices.emplace_back(side, -side, -side); // 12
-			tc.emplace_back(-1.0f, 1.0f);
+			tc.emplace_back(1.0f, 1.0f);
 			vertices.emplace_back(side, -side, side); // 13
-			tc.emplace_back(-1.0f, 2.0f);
+			tc.emplace_back(1.0f, 2.0f);
 		}
 		IndexedLineList GetLines() const
 		{
