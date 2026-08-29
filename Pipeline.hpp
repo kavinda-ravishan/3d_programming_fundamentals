@@ -82,24 +82,24 @@ public:
 	};
 public:
 	Pipeline(Graphics& gfx)
-		: gfx(gfx), pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight())
+		: _gfx(gfx), _pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight())
 	{
 	}
 	void Draw(IndexedTriangleList<Vertex>& triList)
 	{
 		ProcessVertices(triList.vertices, triList.indices);
 	}
-	void BindRotation(const Mat3& rotation_in)
+	void BindRotation(const Mat3& rotation)
 	{
-		rotation = rotation_in;
+		_rotation = rotation;
 	}
-	void BindTranslation(const Vec3& translation_in)
+	void BindTranslation(const Vec3& translation)
 	{
-		translation = translation_in;
+		_translation = translation;
 	}
 	void BindTexture(const std::string& filename)
 	{
-		pTex = std::make_unique<Surface>(Surface(filename));
+		_texture = std::make_unique<Surface>(Surface(filename));
 	}
 private:
 	// vertex processing function
@@ -112,7 +112,7 @@ private:
 		// transform vertices using matrix + vector
 		for (const auto& v : vertices)
 		{
-			verticesOut.emplace_back(v.pos * rotation + translation, v.t);
+			verticesOut.emplace_back(v.pos * _rotation + _translation, v.t);
 		}
 
 		// assemble triangles from stream of indices and vertices
@@ -154,9 +154,9 @@ private:
 	void PostProcessTriangleVertices(Triangle<Vertex>& triangle)
 	{
 		// perspective divide and screen transform for all 3 vertices
-		pc3t.Transform(triangle.v0.pos);
-		pc3t.Transform(triangle.v1.pos);
-		pc3t.Transform(triangle.v2.pos);
+		_pc3t.Transform(triangle.v0.pos);
+		_pc3t.Transform(triangle.v1.pos);
+		_pc3t.Transform(triangle.v2.pos);
 
 		// draw the triangle
 		DrawTriangle(triangle);
@@ -268,8 +268,8 @@ private:
 		itEdge1 += dv1 * (float(yStart) + 0.5f - it0.pos.y);
 
 		// prepare clamping constants
-		const float tex_width = float(pTex->GetWidth());
-		const float tex_height = float(pTex->GetHeight());
+		const float tex_width = float(_texture->GetWidth());
+		const float tex_height = float(_texture->GetHeight());
 		const float tex_xclamp = tex_width - 1.0f;
 		const float tex_yclamp = tex_height - 1.0f;
 
@@ -294,7 +294,7 @@ private:
 			for (int x = xStart; x < xEnd; x++, iLine += diLine)
 			{
 				// perform texture lookup, clamp, and write pixel
-				gfx.PutPixel(x, y, pTex->GetPixel(
+				_gfx.PutPixel(x, y, _texture->GetPixel(
 					(unsigned int)std::min(iLine.t.x * tex_width + 0.5f, tex_xclamp),
 					(unsigned int)std::min(iLine.t.y * tex_height + 0.5f, tex_yclamp)
 				));
@@ -302,9 +302,10 @@ private:
 		}
 	}
 private:
-	Graphics& gfx;
-	PC3Transformer pc3t;
-	Mat3 rotation;
-	Vec3 translation;
-	std::unique_ptr<Surface> pTex;
+	Graphics& _gfx;
+	PC3Transformer _pc3t;
+
+	Mat3 _rotation{};
+	Vec3 _translation{};
+	std::unique_ptr<Surface> _texture{};
 };
