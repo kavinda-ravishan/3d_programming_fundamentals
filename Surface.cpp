@@ -58,7 +58,7 @@ cv::Mat* Surface::GetBufferPtr() noexcept {
     return _buffer_ptr.get();
 }
 
-void Surface::Clear(const open_3d::Color color) {
+void Surface::Clear(const Color color) {
     // Interpret the canvas as 32-bit pixels (CV_8UC4 assumed)
     uint32_t* ptr = _buffer_ptr->ptr<uint32_t>(0);
 
@@ -69,7 +69,7 @@ void Surface::Clear(const open_3d::Color color) {
     std::fill(ptr, ptr + total, color.dword);
 }
 
-void Surface::PutPixel(int x, int y, const open_3d::Color color) {
+void Surface::PutPixel(int x, int y, const Color color) {
     assert(x >= 0);
     assert(y >= 0);
     assert(x < _width);
@@ -80,7 +80,7 @@ void Surface::PutPixel(int x, int y, const open_3d::Color color) {
     ptr[x] = color.dword;
 }
 
-open_3d::Color Surface::GetPixel(int x, int y) const {
+Color Surface::GetPixel(int x, int y) const {
     assert(x >= 0);
     assert(y >= 0);
     assert(x < _width);
@@ -90,14 +90,14 @@ open_3d::Color Surface::GetPixel(int x, int y) const {
     return ptr[x];
 }
 
-void Surface::PutPixelAlpha(int x, int y, open_3d::Color color) {
+void Surface::PutPixelAlpha(int x, int y, Color color) {
     assert(x >= 0);
     assert(y >= 0);
     assert(x < _width);
     assert(y < _height);
 
     // load source pixel
-    const open_3d::Color background_color = GetPixel(x, y);
+    const Color background_color = GetPixel(x, y);
 
     // blend channels
     const unsigned char rsltRed = (color.GetR() * color.GetA() + background_color.GetR() * (255u - color.GetA())) / 256u;

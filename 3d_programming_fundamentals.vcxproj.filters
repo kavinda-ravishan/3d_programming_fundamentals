@@ -47,12 +47,6 @@
     <ClInclude Include="PC3Transformer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IndexedLineList.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -62,52 +56,19 @@
     <ClInclude Include="Scene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneSolidCube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneCubeOrder.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneConHex.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ConcaveHexahedron.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneXMutual.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="XQuads.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TexVertex.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Surface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneTexCube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneTexWrapCube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeFolded.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeFoldedWrap.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneFoldedCube.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneFoldedCubeWrap.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeSkinned.hpp">
+    <ClInclude Include="Cube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SceneCubeSkinned.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipeline.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

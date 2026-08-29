@@ -3,14 +3,6 @@
 #include <iostream>
 
 #include "Graphics.hpp"
-#include "SceneSolidCube.hpp"
-#include "SceneCubeOrder.hpp"
-#include "SceneConHex.hpp"
-#include "SceneXMutual.hpp"
-#include "SceneTexCube.hpp"
-#include "SceneTexWrapCube.hpp"
-#include "SceneFoldedCube.hpp"
-#include "SceneFoldedCubeWrap.hpp"
 #include "SceneCubeSkinned.hpp"
 
 class Game {
@@ -18,23 +10,12 @@ public:
     Game(const std::string window_name, const int frame_width, const int frame_height)
         : _gfx(window_name, frame_width, frame_height) {
     
-        const std::string sauron_img_path = "Images\\sauron.png";
         const std::string dice_skin_img_path = "Images\\dice_skin.png";
         const std::string office_skin_img_path = "Images\\office_skin.jpg";
 
-        scenes.push_back(std::make_unique<SceneSolidCube>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<SceneCubeOrder>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<SceneConHex>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<SceneXMutual>(frame_width, frame_height));
-        scenes.push_back(std::make_unique<SceneTexCube>(frame_width, frame_height, sauron_img_path, 1.0f));
-        scenes.push_back(std::make_unique<SceneTexCube>(frame_width, frame_height, sauron_img_path, 2.0f));
-        scenes.push_back(std::make_unique<SceneTexWrapCube>(frame_width, frame_height, sauron_img_path, 1.0f));
-        scenes.push_back(std::make_unique<SceneTexWrapCube>(frame_width, frame_height, sauron_img_path, 2.0f));
-        scenes.push_back(std::make_unique<SceneFoldedCube>(frame_width, frame_height, sauron_img_path));
-        scenes.push_back(std::make_unique<SceneFoldedCubeWrap>(frame_width, frame_height, sauron_img_path));
-        scenes.push_back(std::make_unique<SceneCubeSkinned>(frame_width, frame_height, dice_skin_img_path));
-        scenes.push_back(std::make_unique<SceneCubeSkinned>(frame_width, frame_height, office_skin_img_path));
-        curr_scene = scenes.begin();
+        _scenes.push_back(std::make_unique<SceneCubeSkinned>(_gfx, dice_skin_img_path));
+        _scenes.push_back(std::make_unique<SceneCubeSkinned>(_gfx, office_skin_img_path));
+        _curr_scene = _scenes.begin();
     }
 
     ~Game() = default;
@@ -56,20 +37,20 @@ private:
         constexpr float dt = 1.0f / 60.0f;
 
         const int key_input = _gfx.GetInput();
-        (*curr_scene)->Update(key_input, dt);
+        (*_curr_scene)->Update(key_input, dt);
         ManageInputs(key_input);
     }
 
     void ComposeFrame() {
-        (*curr_scene)->Draw(_gfx);
+        (*_curr_scene)->Draw();
     }
 
     void CycleScenes() {
-        if (++curr_scene == scenes.end()) {
-            curr_scene = scenes.begin();
+        if (++_curr_scene == _scenes.end()) {
+            _curr_scene = _scenes.begin();
         }
         
-        std::cout << "Cycling scene to : " << (*curr_scene)->GetSceneName() << "\n";
+        std::cout << "Cycling scene to : " << (*_curr_scene)->GetSceneName() << "\n";
     }
 
     void ManageInputs(const int key) {
@@ -97,8 +78,8 @@ private:
     Graphics _gfx;
     bool _main_loop_active{ true };
     
-    std::vector<std::unique_ptr<Scene>> scenes;
-    std::vector<std::unique_ptr<Scene>>::iterator curr_scene;
+    std::vector<std::unique_ptr<Scene>> _scenes;
+    std::vector<std::unique_ptr<Scene>>::iterator _curr_scene;
 };
 
 int main() {

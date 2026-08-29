@@ -24,13 +24,11 @@ public:
 
 	cv::Mat* GetBufferPtr() noexcept;
 
-	void Clear(const open_3d::Color color);
+	void Clear(const Color color);
 
-	void PutPixel(int x, int y, const open_3d::Color color);
-	open_3d::Color GetPixel(int x, int y) const;
-	void PutPixelAlpha(int x, int y, open_3d::Color color);
-
-	static Surface FromFile(const std::string& name);
+	void PutPixel(int x, int y, const Color color);
+	Color GetPixel(int x, int y) const;
+	void PutPixelAlpha(int x, int y, Color color);
 private:
 	unsigned int _width{};
 	unsigned int _height{};

@@ -153,33 +153,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.hpp" />
-    <ClInclude Include="ConcaveHexahedron.hpp" />
-    <ClInclude Include="CubeFolded.hpp" />
-    <ClInclude Include="CubeFoldedWrap.hpp" />
-    <ClInclude Include="CubeSkinned.hpp" />
-    <ClInclude Include="SceneCubeSkinned.hpp" />
-    <ClInclude Include="SceneFoldedCubeWrap.hpp" />
-    <ClInclude Include="SceneConHex.hpp" />
     <ClInclude Include="Cube.hpp" />
-    <ClInclude Include="SceneCubeOrder.hpp" />
+    <ClInclude Include="Pipeline.hpp" />
+    <ClInclude Include="SceneCubeSkinned.hpp" />
     <ClInclude Include="Graphics.hpp" />
-    <ClInclude Include="IndexedLineList.hpp" />
     <ClInclude Include="IndexedTriangleList.hpp" />
     <ClInclude Include="Mat2.hpp" />
     <ClInclude Include="Mat3.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
     <ClInclude Include="Scene.hpp" />
-    <ClInclude Include="SceneFoldedCube.hpp" />
-    <ClInclude Include="SceneSolidCube.hpp" />
-    <ClInclude Include="SceneTexWrapCube.hpp" />
     <ClInclude Include="Surface.hpp" />
-    <ClInclude Include="SceneTexCube.hpp" />
-    <ClInclude Include="TexVertex.hpp" />
+    <ClInclude Include="Triangle.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
-    <ClInclude Include="SceneXMutual.hpp" />
-    <ClInclude Include="XQuads.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\dice_skin.png" />
