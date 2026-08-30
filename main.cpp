@@ -6,6 +6,7 @@
 #include "CubeSkinnedScene.hpp"
 #include "CubeVertexColorScene.hpp"
 #include "CubeSolidScene.hpp"
+#include "DoubleCubeScene.hpp"
 
 class Game {
 public:
@@ -19,6 +20,7 @@ public:
         _scenes.push_back(std::make_unique<CubeSkinnedScene>(_gfx, office_skin_img_path));
         _scenes.push_back(std::make_unique<CubeVertexColorScene>(_gfx));
         _scenes.push_back(std::make_unique<CubeSolidScene>(_gfx));
+        _scenes.push_back(std::make_unique<DoubleCubeScene>(_gfx));
         _curr_scene = _scenes.begin();
     }
 

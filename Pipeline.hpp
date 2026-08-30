@@ -6,6 +6,7 @@
 #include "IndexedTriangleList.hpp"
 #include "PC3Transformer.hpp"
 #include "Mat3.hpp"
+#include "ZBuffer.hpp"
 
 // triangle drawing pipeline with programable
 // pixel shading stage
@@ -17,8 +18,13 @@ public:
 	typedef typename Effect::Vertex Vertex;
 public:
 	Pipeline(Graphics& gfx)
-		: _gfx(gfx), _pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight())
+		: 
+		_gfx(gfx), 
+		_pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight()), 
+		_z_buffer(gfx.GetFrameWidth(), gfx.GetFrameHeight()) {}
+	void BeginFrame() 
 	{
+		_z_buffer.Clear();
 	}
 	void Draw(IndexedTriangleList<Vertex>& triList)
 	{
@@ -220,13 +226,18 @@ private:
 			{
 				// recover interpolated z from interpolated 1/z
 				const float z = 1.0f / iLine.pos.z;
-				// recover interpolated attributes
-				// (wasted effort in multiplying pos (x,y,z) here, but
-				//  not a huge deal, not worth the code complication to fix)
-				const auto attr = iLine * z;
-				// invoke pixel shader with interpolated vertex attributes
-				// and use result to set the pixel color on the screen
-				_gfx.PutPixel(x, y, effect.ps(attr));
+				// do z rejection / update of z buffer
+				// skip shading step if z rejected (early z)
+				if (_z_buffer.TestAndSet(x, y, z))
+				{
+					// recover interpolated attributes
+					// (wasted effort in multiplying pos (x,y,z) here, but
+					//  not a huge deal, not worth the code complication to fix)
+					const auto attr = iLine * z;
+					// invoke pixel shader with interpolated vertex attributes
+					// and use result to set the pixel color on the screen
+					_gfx.PutPixel(x, y, effect.ps(attr));
+				}
 			}
 		}
 	}
@@ -235,6 +246,7 @@ public:
 private:
 	Graphics& _gfx;
 	PC3Transformer _pc3t;
+	ZBuffer _z_buffer;
 
 	Mat3 _rotation{};
 	Vec3 _translation{};

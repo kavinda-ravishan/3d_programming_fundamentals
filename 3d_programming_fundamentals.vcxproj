@@ -156,6 +156,7 @@
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="CubeSolidScene.hpp" />
     <ClInclude Include="CubeVertexColorScene.hpp" />
+    <ClInclude Include="DoubleCubeScene.hpp" />
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="CubeSkinnedScene.hpp" />
     <ClInclude Include="Graphics.hpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
     <ClInclude Include="VertexColorEffect.hpp" />
+    <ClInclude Include="ZBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\dice_skin.png" />
