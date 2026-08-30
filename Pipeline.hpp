@@ -85,9 +85,9 @@ private:
 	void PostProcessTriangleVertices(Triangle<Vertex>& triangle)
 	{
 		// perspective divide and screen transform for all 3 vertices
-		_pc3t.Transform(triangle.v0.pos);
-		_pc3t.Transform(triangle.v1.pos);
-		_pc3t.Transform(triangle.v2.pos);
+		_pc3t.Transform(triangle.v0);
+		_pc3t.Transform(triangle.v1);
+		_pc3t.Transform(triangle.v2);
 
 		// draw the triangle
 		DrawTriangle(triangle);
@@ -218,8 +218,15 @@ private:
 
 			for (int x = xStart; x < xEnd; x++, iLine += diLine)
 			{
-				// invoke pixel shader and write resulting color value
-				_gfx.PutPixel(x, y, effect.ps(iLine));
+				// recover interpolated z from interpolated 1/z
+				const float z = 1.0f / iLine.pos.z;
+				// recover interpolated attributes
+				// (wasted effort in multiplying pos (x,y,z) here, but
+				//  not a huge deal, not worth the code complication to fix)
+				const auto attr = iLine * z;
+				// invoke pixel shader with interpolated vertex attributes
+				// and use result to set the pixel color on the screen
+				_gfx.PutPixel(x, y, effect.ps(attr));
 			}
 		}
 	}

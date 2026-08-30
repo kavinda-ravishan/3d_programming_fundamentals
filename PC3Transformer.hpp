@@ -12,19 +12,32 @@ public:
 	{
 	}
 	// PC3 -> screen coordinate
-	Vec3& Transform(Vec3& v) const
+	template<class Vertex>
+	Vertex& Transform(Vertex& v) const
 	{
-		const float z_inv = 1 / v.z;
+		const float zInv = 1.0f / v.pos.z;
+		// divide all position components and attributes by z
+		// (we want to be interpolating our attributes in the
+		//  same space where the x,y interpolation is taking
+		//  place to prevent distortion)
+		v *= zInv;
+		// adjust position x,y from perspective normalized space
+		// to screen dimension space after perspective divide
+		v.pos.x = (v.pos.x + 1.0f) * _x_factor;
+		v.pos.y = (-v.pos.y + 1.0f) * _y_factor;
+		// store 1/z in z (we will need the interpolated 1/z
+		// so that we can recover the attributes after interp.)
+		v.pos.z = zInv;
 
-		v.x = ((v.x * z_inv) + 1.0f) * _x_factor;
-		v.y = (-(v.y * z_inv) + 1.0f) * _y_factor;
 		return v;
 	}
+
 	// PC3 -> screen coordinate
-	Vec3 GetTransformed(const Vec3& v) const
+	template<class Vertex>
+	Vertex GetTransformed(const Vertex& v) const
 	{
-		Vec3 vec3{ v };
-		return Transform(vec3);
+		Vertex vertex{ v };
+		return Transform(vertex);
 	}
 private:
 	float _x_factor;
