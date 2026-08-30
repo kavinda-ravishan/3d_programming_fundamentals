@@ -154,8 +154,10 @@
   <ItemGroup>
     <ClInclude Include="Colors.hpp" />
     <ClInclude Include="Cube.hpp" />
+    <ClInclude Include="CubeSolidScene.hpp" />
+    <ClInclude Include="CubeVertexColorScene.hpp" />
     <ClInclude Include="Pipeline.hpp" />
-    <ClInclude Include="SceneCubeSkinned.hpp" />
+    <ClInclude Include="CubeSkinnedScene.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="IndexedTriangleList.hpp" />
     <ClInclude Include="Mat2.hpp" />
@@ -163,10 +165,13 @@
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
     <ClInclude Include="Scene.hpp" />
+    <ClInclude Include="SolidEffect.hpp" />
     <ClInclude Include="Surface.hpp" />
+    <ClInclude Include="TextureEffect.hpp" />
     <ClInclude Include="Triangle.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
+    <ClInclude Include="VertexColorEffect.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\dice_skin.png" />

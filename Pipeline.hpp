@@ -7,79 +7,14 @@
 #include "PC3Transformer.hpp"
 #include "Mat3.hpp"
 
-// fixed-function triangle drawing pipeline
-// draws textured triangle lists with clamping
+// triangle drawing pipeline with programable
+// pixel shading stage
+template<class Effect>
 class Pipeline
 {
 public:
 	// vertex type used for geometry and throughout pipeline
-	class Vertex
-	{
-	public:
-		Vertex() = default;
-		Vertex(const Vec3& pos)
-			:
-			pos(pos)
-		{
-		}
-		// this enables template functions clone a vertex
-		// while changing the pos only
-		Vertex(const Vec3& pos, const Vertex& src)
-			:
-			t(src.t),
-			pos(pos)
-		{
-		}
-		Vertex(const Vec3& pos, const Vec2& t)
-			:
-			t(t),
-			pos(pos)
-		{
-		}
-		Vertex& operator+=(const Vertex& rhs)
-		{
-			pos += rhs.pos;
-			t += rhs.t;
-			return *this;
-		}
-		Vertex operator+(const Vertex& rhs) const
-		{
-			return Vertex(*this) += rhs;
-		}
-		Vertex& operator-=(const Vertex& rhs)
-		{
-			pos -= rhs.pos;
-			t -= rhs.t;
-			return *this;
-		}
-		Vertex operator-(const Vertex& rhs) const
-		{
-			return Vertex(*this) -= rhs;
-		}
-		Vertex& operator*=(float rhs)
-		{
-			pos *= rhs;
-			t *= rhs;
-			return *this;
-		}
-		Vertex operator*(float rhs) const
-		{
-			return Vertex(*this) *= rhs;
-		}
-		Vertex& operator/=(float rhs)
-		{
-			pos /= rhs;
-			t /= rhs;
-			return *this;
-		}
-		Vertex operator/(float rhs) const
-		{
-			return Vertex(*this) /= rhs;
-		}
-	public:
-		Vec3 pos;
-		Vec2 t;
-	};
+	typedef typename Effect::Vertex Vertex;
 public:
 	Pipeline(Graphics& gfx)
 		: _gfx(gfx), _pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight())
@@ -97,10 +32,6 @@ public:
 	{
 		_translation = translation;
 	}
-	void BindTexture(const std::string& filename)
-	{
-		_texture = std::make_unique<Surface>(Surface(filename));
-	}
 private:
 	// vertex processing function
 	// transforms vertices and then passes vtx & idx lists to triangle assembler
@@ -112,7 +43,7 @@ private:
 		// transform vertices using matrix + vector
 		for (const auto& v : vertices)
 		{
-			verticesOut.emplace_back(v.pos * _rotation + _translation, v.t);
+			verticesOut.emplace_back(v.pos * _rotation + _translation, v);
 		}
 
 		// assemble triangles from stream of indices and vertices
@@ -267,12 +198,6 @@ private:
 		itEdge0 += dv0 * (float(yStart) + 0.5f - it0.pos.y);
 		itEdge1 += dv1 * (float(yStart) + 0.5f - it0.pos.y);
 
-		// prepare clamping constants
-		const float tex_width = float(_texture->GetWidth());
-		const float tex_height = float(_texture->GetHeight());
-		const float tex_xclamp = tex_width - 1.0f;
-		const float tex_yclamp = tex_height - 1.0f;
-
 		for (int y = yStart; y < yEnd; y++, itEdge0 += dv0, itEdge1 += dv1)
 		{
 			// calculate start and end pixels
@@ -293,19 +218,17 @@ private:
 
 			for (int x = xStart; x < xEnd; x++, iLine += diLine)
 			{
-				// perform texture lookup, clamp, and write pixel
-				_gfx.PutPixel(x, y, _texture->GetPixel(
-					(unsigned int)std::min(iLine.t.x * tex_width + 0.5f, tex_xclamp),
-					(unsigned int)std::min(iLine.t.y * tex_height + 0.5f, tex_yclamp)
-				));
+				// invoke pixel shader and write resulting color value
+				_gfx.PutPixel(x, y, effect.ps(iLine));
 			}
 		}
 	}
+public:
+	Effect effect{};
 private:
 	Graphics& _gfx;
 	PC3Transformer _pc3t;
 
 	Mat3 _rotation{};
 	Vec3 _translation{};
-	std::unique_ptr<Surface> _texture{};
 };

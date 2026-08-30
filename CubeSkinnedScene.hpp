@@ -4,13 +4,15 @@
 #include "Cube.hpp"
 #include "Mat3.hpp"
 #include "Pipeline.hpp"
+#include "TextureEffect.hpp"
 
-class SceneCubeSkinned : public Scene
+class CubeSkinnedScene : public Scene
 {
 public:
+    typedef Pipeline<TextureEffect> Pipeline;
     typedef Pipeline::Vertex Vertex;
 public:
-    SceneCubeSkinned(Graphics& gfx, const std::string texture_path)
+    CubeSkinnedScene(Graphics& gfx, const std::string texture_path)
         :
         Scene(
             std::string("Folded Textured Clamped Cube ") + texture_path
@@ -18,10 +20,10 @@ public:
         itlist(Cube::GetSkinned<Vertex>()),
         pipeline(gfx) 
     {
-        pipeline.BindTexture(texture_path);
+        pipeline.effect.ps.BindTexture(texture_path);
     }
 
-    ~SceneCubeSkinned() = default;
+    ~CubeSkinnedScene() = default;
 
     virtual void Update(const int key, const float dt) override {
         switch (key) {

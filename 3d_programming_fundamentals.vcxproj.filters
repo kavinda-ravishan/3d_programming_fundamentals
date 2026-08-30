@@ -62,13 +62,28 @@
     <ClInclude Include="Cube.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneCubeSkinned.hpp">
+    <ClInclude Include="CubeSkinnedScene.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Pipeline.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Triangle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureEffect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexColorEffect.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeVertexColorScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeSolidScene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidEffect.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

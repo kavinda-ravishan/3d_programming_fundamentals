@@ -107,8 +107,8 @@ public:
 		return !(*this == rhs);
 	}
 public:
-	T x;
-	T y;
+	T x{};
+	T y{};
 };
 
 typedef _Vec2<float> Vec2;

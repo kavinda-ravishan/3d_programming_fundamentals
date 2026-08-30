@@ -3,7 +3,9 @@
 #include <iostream>
 
 #include "Graphics.hpp"
-#include "SceneCubeSkinned.hpp"
+#include "CubeSkinnedScene.hpp"
+#include "CubeVertexColorScene.hpp"
+#include "CubeSolidScene.hpp"
 
 class Game {
 public:
@@ -13,8 +15,10 @@ public:
         const std::string dice_skin_img_path = "Images\\dice_skin.png";
         const std::string office_skin_img_path = "Images\\office_skin.jpg";
 
-        _scenes.push_back(std::make_unique<SceneCubeSkinned>(_gfx, dice_skin_img_path));
-        _scenes.push_back(std::make_unique<SceneCubeSkinned>(_gfx, office_skin_img_path));
+        _scenes.push_back(std::make_unique<CubeSkinnedScene>(_gfx, dice_skin_img_path));
+        _scenes.push_back(std::make_unique<CubeSkinnedScene>(_gfx, office_skin_img_path));
+        _scenes.push_back(std::make_unique<CubeVertexColorScene>(_gfx));
+        _scenes.push_back(std::make_unique<CubeSolidScene>(_gfx));
         _curr_scene = _scenes.begin();
     }
 

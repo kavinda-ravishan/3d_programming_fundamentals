@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math.hpp"
+#include "Vec2.hpp"
 
 template <typename T>
 class _Vec3 : public _Vec2<T>
@@ -120,7 +121,7 @@ public:
 		return !(*this == rhs);
 	}
 public:
-	T z;
+	T z{};
 };
 
 typedef _Vec3<float> Vec3;

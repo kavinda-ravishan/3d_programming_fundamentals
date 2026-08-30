@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Vec3.hpp"
+
 class Color
 {
 public:
@@ -30,6 +32,15 @@ public:
 		:
 		Color((x << 24u) | col.dword)
 	{
+	}
+	explicit Color(const Vec3& cf)
+		:
+		Color(unsigned char(cf.x), unsigned char(cf.y), unsigned char(cf.z))
+	{
+	}
+	explicit operator Vec3() const
+	{
+		return{ float(GetR()),float(GetG()), float(GetB()) };
 	}
 	Color& operator =(Color color)
 	{
