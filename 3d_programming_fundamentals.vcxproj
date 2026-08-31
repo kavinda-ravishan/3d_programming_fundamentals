@@ -150,10 +150,12 @@
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Surface.cpp" />
+    <ClCompile Include="tiny_obj_loader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.hpp" />
     <ClInclude Include="Cube.hpp" />
+    <ClInclude Include="CubeFlatIndependentScene.hpp" />
     <ClInclude Include="CubeSolidGeometryScene.hpp" />
     <ClInclude Include="CubeSolidScene.hpp" />
     <ClInclude Include="CubeVertexColorScene.hpp" />
@@ -161,6 +163,9 @@
     <ClInclude Include="DefaultGeometryShader.hpp" />
     <ClInclude Include="DefaultVertexShader.hpp" />
     <ClInclude Include="DoubleCubeScene.hpp" />
+    <ClInclude Include="GeometryFlatEffect.hpp" />
+    <ClInclude Include="GeometryFlatScene.hpp" />
+    <ClInclude Include="Miniball.hpp" />
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="CubeSkinnedScene.hpp" />
     <ClInclude Include="Graphics.hpp" />
@@ -175,10 +180,12 @@
     <ClInclude Include="SolidGeometryEffect.hpp" />
     <ClInclude Include="Surface.hpp" />
     <ClInclude Include="TextureEffect.hpp" />
+    <ClInclude Include="tiny_obj_loader.hpp" />
     <ClInclude Include="Triangle.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
     <ClInclude Include="VertexColorEffect.hpp" />
+    <ClInclude Include="VertexFlatEffect.hpp" />
     <ClInclude Include="VertexPositionColorEffect.hpp" />
     <ClInclude Include="VertexWaveScene.hpp" />
     <ClInclude Include="WaveVertexTextureEffect.hpp" />

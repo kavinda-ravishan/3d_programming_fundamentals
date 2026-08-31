@@ -1,27 +1,25 @@
 #pragma once
 
 #include "Scene.hpp"
-#include "Plane.hpp"
+#include "Cube.hpp"
 #include "Mat3.hpp"
-#include "WaveVertexTextureEffect.hpp"
+#include "Pipeline.hpp"
+#include "VertexFlatEffect.hpp"
 
-class VertexWaveScene : public Scene
+class CubeFlatIndependentScene : public Scene
 {
 public:
-	typedef Pipeline<WaveVertexTextureEffect> Pipeline;
+	typedef Pipeline<VertexFlatEffect> Pipeline;
 	typedef Pipeline::Vertex Vertex;
 public:
-	VertexWaveScene(Graphics& gfx, const std::string texture_path)
+	CubeFlatIndependentScene(Graphics& gfx)
 		:
-		Scene("Test Plane Rippling VS " + texture_path),
-		itlist(Plane::GetSkinned<Vertex>(20)),
-		pipeline(gfx)
+		itlist(Cube::GetIndependentFacesNormals<Vertex>()),
+		pipeline(gfx),
+		Scene("Cube flat vertex scene")
 	{
-		pipeline.effect.ps.BindTexture(texture_path);
 	}
 	virtual void Update(const int key, const float dt) override {
-		time = time > 1000.0f ? 0.0f : (time + dt);
-
 		switch (key) {
 		case 'q':
 			theta_x = wrap_angle(theta_x + delta_theta * dt);
@@ -89,8 +87,7 @@ public:
 		// set pipeline transform
 		pipeline.effect.vs.BindRotation(rot);
 		pipeline.effect.vs.BindTranslation(trans);
-		pipeline.effect.vs.SetTime(time);
-		pipeline.effect.gs.SetLightDirection(light_dir * rot_phi);
+		pipeline.effect.vs.SetLightDirection(light_dir * rot_phi);
 		// render triangles
 		pipeline.Draw(itlist);
 	}
@@ -102,7 +99,6 @@ private:
 	float theta_x = 0.0f;
 	float theta_y = 0.0f;
 	float theta_z = 0.0f;
-	float time = 0.0f;
 	float phi_x = 0.0f;
 	float phi_y = 0.0f;
 	float phi_z = 0.0f;

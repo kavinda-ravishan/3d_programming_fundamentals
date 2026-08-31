@@ -120,6 +120,36 @@ public:
 	{
 		return !(*this == rhs);
 	}
+	// clamp to between 0.0 ~ 1.0
+	_Vec3& Saturate()
+	{
+		this->x = std::min(1.0f, std::max(0.0f, this->x));
+		this->y = std::min(1.0f, std::max(0.0f, this->y));
+		this->z = std::min(1.0f, std::max(0.0f, this->z));
+		return *this;
+	}
+	// clamp to between 0.0 ~ 1.0
+	_Vec3	GetSaturated() const
+	{
+		_Vec3 temp(*this);
+		temp.Saturate();
+		return temp;
+	}
+	// x3 = x1 * x2 etc.
+	_Vec3& Hadamard(const _Vec3& rhs)
+	{
+		this->x *= rhs.x;
+		this->y *= rhs.y;
+		this->z *= rhs.z;
+		return *this;
+	}
+	// x3 = x1 * x2 etc.
+	_Vec3	GetHadamard(const _Vec3& rhs) const
+	{
+		_Vec3 temp(*this);
+		temp.Hadamard(rhs);
+		return temp;
+	}
 public:
 	T z{};
 };

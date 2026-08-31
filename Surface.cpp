@@ -72,8 +72,8 @@ void Surface::Clear(const Color color) {
 void Surface::PutPixel(int x, int y, const Color color) {
     assert(x >= 0);
     assert(y >= 0);
-    assert(x < _width);
-    assert(y < _height);
+    assert(x < (int)_width);
+    assert(y < (int)_height);
 
     // Pointer to the pixel (BGRA order in OpenCV)
     uint32_t* ptr = _buffer_ptr->ptr<uint32_t>(y);
@@ -83,8 +83,8 @@ void Surface::PutPixel(int x, int y, const Color color) {
 Color Surface::GetPixel(int x, int y) const {
     assert(x >= 0);
     assert(y >= 0);
-    assert(x < _width);
-    assert(y < _height);
+    assert(x < (int)_width);
+    assert(y < (int)_height);
 
     const uint32_t* ptr = _buffer_ptr->ptr<uint32_t>(y);
     return ptr[x];
@@ -93,8 +93,8 @@ Color Surface::GetPixel(int x, int y) const {
 void Surface::PutPixelAlpha(int x, int y, Color color) {
     assert(x >= 0);
     assert(y >= 0);
-    assert(x < _width);
-    assert(y < _height);
+    assert(x < (int)_width);
+    assert(y < (int)_height);
 
     // load source pixel
     const Color background_color = GetPixel(x, y);

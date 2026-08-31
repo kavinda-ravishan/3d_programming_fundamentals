@@ -10,16 +10,29 @@
 #include "VertexWaveScene.hpp"
 #include "CubeVertexPositionColorScene.hpp"
 #include "CubeSolidGeometryScene.hpp"
+#include "CubeFlatIndependentScene.hpp"
+#include "GeometryFlatScene.hpp"
 
 class Game {
 public:
     Game(const std::string window_name, const int frame_width, const int frame_height)
         : _gfx(window_name, frame_width, frame_height) {
     
+
         const std::string sauron_img_path = "Images\\sauron.png";
         const std::string dice_skin_img_path = "Images\\dice_skin.png";
         const std::string office_skin_img_path = "Images\\office_skin.jpg";
 
+        const std::string bunny_obj_path = "Models\\bunny.obj";
+        const std::string suzanne_obj_path = "Models\\suzanne.obj";
+
+        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx,
+            IndexedTriangleList<GeometryFlatScene::Vertex>::Load(suzanne_obj_path)));
+        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx,
+            IndexedTriangleList<GeometryFlatScene::Vertex>::Load(bunny_obj_path)));
+        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Cube::GetPlain<GeometryFlatScene::Vertex>()));
+        _scenes.push_back(std::make_unique<CubeFlatIndependentScene>(_gfx));
+        _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
         _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
         _scenes.push_back(std::make_unique<CubeVertexPositionColorScene>(_gfx));
         _scenes.push_back(std::make_unique<VertexWaveScene>(_gfx, sauron_img_path));

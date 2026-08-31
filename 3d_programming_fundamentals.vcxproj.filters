@@ -30,6 +30,9 @@
     <ClCompile Include="Surface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tiny_obj_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Colors.hpp">
@@ -124,6 +127,24 @@
     </ClInclude>
     <ClInclude Include="CubeSolidGeometryScene.hpp">
       <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexFlatEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeFlatIndependentScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryFlatEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryFlatScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="tiny_obj_loader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Miniball.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
