@@ -98,6 +98,18 @@
     <ClInclude Include="SolidEffect.hpp">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="DefaultVertexShader.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="WaveVertexTextureEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexWaveScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">

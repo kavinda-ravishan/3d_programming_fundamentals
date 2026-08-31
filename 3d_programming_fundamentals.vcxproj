@@ -156,6 +156,7 @@
     <ClInclude Include="Cube.hpp" />
     <ClInclude Include="CubeSolidScene.hpp" />
     <ClInclude Include="CubeVertexColorScene.hpp" />
+    <ClInclude Include="DefaultVertexShader.hpp" />
     <ClInclude Include="DoubleCubeScene.hpp" />
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="CubeSkinnedScene.hpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Mat3.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
+    <ClInclude Include="Plane.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SolidEffect.hpp" />
     <ClInclude Include="Surface.hpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
     <ClInclude Include="VertexColorEffect.hpp" />
+    <ClInclude Include="VertexWaveScene.hpp" />
+    <ClInclude Include="WaveVertexTextureEffect.hpp" />
     <ClInclude Include="ZBuffer.hpp" />
   </ItemGroup>
   <ItemGroup>

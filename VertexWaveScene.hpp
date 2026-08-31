@@ -1,33 +1,27 @@
 #pragma once
 
 #include "Scene.hpp"
-#include "Cube.hpp"
+#include "Plane.hpp"
 #include "Mat3.hpp"
-#include "Pipeline.hpp"
-#include "SolidEffect.hpp"
+#include "WaveVertexTextureEffect.hpp"
 
-class CubeSolidScene : public Scene
+class VertexWaveScene : public Scene
 {
 public:
-	typedef Pipeline<SolidEffect> Pipeline;
+	typedef Pipeline<WaveVertexTextureEffect> Pipeline;
 	typedef Pipeline::Vertex Vertex;
 public:
-	CubeSolidScene(Graphics& gfx)
+	VertexWaveScene(Graphics& gfx, const std::string texture_path)
 		:
-		itlist(Cube::GetPlainIndependentFaces<Vertex>()),
-		pipeline(gfx),
-		Scene("Colored cube solid faces scene")
+		Scene("Test Plane Rippling VS " + texture_path),
+		itlist(Plane::GetSkinned<Vertex>(20)),
+		pipeline(gfx)
 	{
-		const Color colors[] = {
-			Colors::Red,Colors::Green,Colors::Blue,Colors::Magenta,Colors::Yellow,Colors::Cyan
-		};
-
-		for (int i = 0; i < itlist.vertices.size(); i++)
-		{
-			itlist.vertices[i].color = colors[i / 4];
-		}
+		pipeline.effect.ps.BindTexture(texture_path);
 	}
 	virtual void Update(const int key, const float dt) override {
+		time = time > 1000.0f ? 0.0f : (time + dt);
+
 		switch (key) {
 		case 'q':
 			theta_x = wrap_angle(theta_x + delta_theta * dt);
@@ -72,6 +66,7 @@ public:
 		// set pipeline transform
 		pipeline.effect.vs.BindRotation(rot);
 		pipeline.effect.vs.BindTranslation(trans);
+		pipeline.effect.vs.SetTime(time);
 		// render triangles
 		pipeline.Draw(itlist);
 	}
@@ -83,4 +78,5 @@ private:
 	float theta_x = 0.0f;
 	float theta_y = 0.0f;
 	float theta_z = 0.0f;
+	float time = 0.0f;
 };

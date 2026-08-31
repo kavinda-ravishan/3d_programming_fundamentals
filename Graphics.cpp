@@ -27,9 +27,8 @@ void Graphics::EndFrame() {
     cv::imshow(_window_name, *_canvas.GetBufferPtr());
 }
 
-int Graphics::GetInput() {
-    const int key = cv::waitKey(0); // waits indefinitely for a key press
-    return key;
+int Graphics::GetInput(const int delay) {
+    return cv::waitKey(delay);
 }
 
 void Graphics::ClearFrame() {

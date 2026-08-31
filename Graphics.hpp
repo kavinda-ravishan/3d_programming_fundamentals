@@ -17,7 +17,7 @@ public:
     void BeginFrame();
     void EndFrame();
 
-    int GetInput();
+    int GetInput(const int delay = 0);
 
     void PutPixel(int x, int y, const Color color);
     Color GetPixel(int x, int y) const;

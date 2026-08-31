@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Pipeline.hpp"
+#include "DefaultVertexShader.hpp"
 
 // solid color attribute not interpolated
 class SolidEffect
@@ -68,6 +69,9 @@ public:
 		Vec3 pos;
 		Color color;
 	};
+	// default vs rotates and translates vertices
+	// does not touch attributes
+	typedef DefaultVertexShader<Vertex> VertexShader;
 	// invoked for each pixel of a triangle
 	// takes an input of attributes that are the
 	// result of interpolating vertex attributes
@@ -82,5 +86,6 @@ public:
 		}
 	};
 public:
+	VertexShader vs;
 	PixelShader ps;
 };
