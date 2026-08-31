@@ -9,6 +9,7 @@
 #include "DoubleCubeScene.hpp"
 #include "VertexWaveScene.hpp"
 #include "CubeVertexPositionColorScene.hpp"
+#include "CubeSolidGeometryScene.hpp"
 
 class Game {
 public:
@@ -19,6 +20,7 @@ public:
         const std::string dice_skin_img_path = "Images\\dice_skin.png";
         const std::string office_skin_img_path = "Images\\office_skin.jpg";
 
+        _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
         _scenes.push_back(std::make_unique<CubeVertexPositionColorScene>(_gfx));
         _scenes.push_back(std::make_unique<VertexWaveScene>(_gfx, sauron_img_path));
         _scenes.push_back(std::make_unique<DoubleCubeScene>(_gfx));

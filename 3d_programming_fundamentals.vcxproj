@@ -154,9 +154,11 @@
   <ItemGroup>
     <ClInclude Include="Colors.hpp" />
     <ClInclude Include="Cube.hpp" />
+    <ClInclude Include="CubeSolidGeometryScene.hpp" />
     <ClInclude Include="CubeSolidScene.hpp" />
     <ClInclude Include="CubeVertexColorScene.hpp" />
     <ClInclude Include="CubeVertexPositionColorScene.hpp" />
+    <ClInclude Include="DefaultGeometryShader.hpp" />
     <ClInclude Include="DefaultVertexShader.hpp" />
     <ClInclude Include="DoubleCubeScene.hpp" />
     <ClInclude Include="Pipeline.hpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Plane.hpp" />
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SolidEffect.hpp" />
+    <ClInclude Include="SolidGeometryEffect.hpp" />
     <ClInclude Include="Surface.hpp" />
     <ClInclude Include="TextureEffect.hpp" />
     <ClInclude Include="Triangle.hpp" />

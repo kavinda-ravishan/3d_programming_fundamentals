@@ -116,6 +116,15 @@
     <ClInclude Include="VertexPositionColorEffect.hpp">
       <Filter>Header Files\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="DefaultGeometryShader.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidGeometryEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeSolidGeometryScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">
