@@ -110,6 +110,12 @@
     <ClInclude Include="Plane.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CubeVertexPositionColorScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexPositionColorEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">
