@@ -165,6 +165,8 @@
     <ClInclude Include="DoubleCubeScene.hpp" />
     <ClInclude Include="GeometryFlatEffect.hpp" />
     <ClInclude Include="GeometryFlatScene.hpp" />
+    <ClInclude Include="GouraudEffect.hpp" />
+    <ClInclude Include="GouraudScene.hpp" />
     <ClInclude Include="Miniball.hpp" />
     <ClInclude Include="Pipeline.hpp" />
     <ClInclude Include="CubeSkinnedScene.hpp" />
@@ -178,6 +180,7 @@
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SolidEffect.hpp" />
     <ClInclude Include="SolidGeometryEffect.hpp" />
+    <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="Surface.hpp" />
     <ClInclude Include="TextureEffect.hpp" />
     <ClInclude Include="tiny_obj_loader.hpp" />

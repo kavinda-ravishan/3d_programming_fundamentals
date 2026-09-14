@@ -146,6 +146,15 @@
     <ClInclude Include="Miniball.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Sphere.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GouraudEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GouraudScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">
