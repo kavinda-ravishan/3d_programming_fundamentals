@@ -161,6 +161,12 @@
     <ClInclude Include="GouraudPointScene.hpp">
       <Filter>Header Files\Seens</Filter>
     </ClInclude>
+    <ClInclude Include="PhongPointEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="PhongPointScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">

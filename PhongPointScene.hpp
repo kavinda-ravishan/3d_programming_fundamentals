@@ -4,23 +4,24 @@
 #include "Cube.hpp"
 #include "Mat3.hpp"
 #include "Pipeline.hpp"
-#include "GouraudPointEffect.hpp"
+#include "PhongPointEffect.hpp"
 #include "SolidEffect.hpp"
+#include "Sphere.hpp"
 
-class GouraudPointScene : public Scene
+class PhongPointScene : public Scene
 {
 public:
-	typedef ::Pipeline<GouraudPointEffect> Pipeline;
+	typedef ::Pipeline<PhongPointEffect> Pipeline;
 	typedef ::Pipeline<SolidEffect> LightIndicatorPipeline;
 	typedef Pipeline::Vertex Vertex;
 public:
-	GouraudPointScene(Graphics& gfx, IndexedTriangleList<Vertex> tl)
+	PhongPointScene(Graphics& gfx, IndexedTriangleList<Vertex> tl)
 		:
 		itlist(std::move(tl)),
 		pZb(std::make_shared<ZBuffer>(gfx.GetFrameWidth(), gfx.GetFrameHeight())),
 		pipeline(gfx, pZb),
 		liPipeline(gfx, pZb),
-		Scene("gouraud point shader scene free mesh")
+		Scene("phong point shader scene free mesh")
 	{
 		itlist.AdjustToTrueCenter();
 		offset_z = itlist.GetRadius() * 1.6f;
@@ -92,7 +93,7 @@ public:
 		// set pipeline transform
 		pipeline.effect.vs.BindRotation(rot);
 		pipeline.effect.vs.BindTranslation(trans);
-		pipeline.effect.vs.SetLightPosition({ lpos_x,lpos_y,lpos_z });
+		pipeline.effect.ps.SetLightPosition({ lpos_x,lpos_y,lpos_z });
 		// render triangles
 		pipeline.Draw(itlist);
 

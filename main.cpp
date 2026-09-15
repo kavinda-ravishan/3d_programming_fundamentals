@@ -15,6 +15,7 @@
 #include "GeometryFlatScene.hpp"
 #include "GouraudScene.hpp"
 #include "GouraudPointScene.hpp"
+#include "PhongPointScene.hpp"
 
 class Game {
 public:
@@ -29,15 +30,15 @@ public:
         const std::string bunny_obj_path = "Models\\bunny.obj";
         const std::string suzanne_obj_path = "Models\\suzanne.obj";
 
-        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, Plane::GetNormals<GouraudPointScene::Vertex>(1)));
+        _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, IndexedTriangleList<PhongPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
+        _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, Plane::GetNormals<PhongPointScene::Vertex>()));
+        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, Plane::GetNormals<GouraudPointScene::Vertex>()));
         _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, IndexedTriangleList<GouraudPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<GouraudScene>(_gfx, IndexedTriangleList<GouraudScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<GouraudScene>(_gfx, Sphere::GetPlainNormals<GouraudScene::Vertex>()));
         _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Sphere::GetPlain<GeometryFlatScene::Vertex>( 1.0f, 36, 72 )));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx,
-            IndexedTriangleList<GeometryFlatScene::Vertex>::Load(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx,
-            IndexedTriangleList<GeometryFlatScene::Vertex>::Load(bunny_obj_path)));
+        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, IndexedTriangleList<GeometryFlatScene::Vertex>::Load(suzanne_obj_path)));
+        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, IndexedTriangleList<GeometryFlatScene::Vertex>::Load(bunny_obj_path)));
         _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Cube::GetPlain<GeometryFlatScene::Vertex>()));
         _scenes.push_back(std::make_unique<CubeFlatIndependentScene>(_gfx));
         _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
