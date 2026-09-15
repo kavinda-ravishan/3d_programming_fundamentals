@@ -167,6 +167,12 @@
     <ClInclude Include="PhongPointScene.hpp">
       <Filter>Header Files\Seens</Filter>
     </ClInclude>
+    <ClInclude Include="SpecularPhongPointEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="SpecularPhonePointScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">

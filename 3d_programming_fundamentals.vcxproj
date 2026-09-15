@@ -184,6 +184,8 @@
     <ClInclude Include="Scene.hpp" />
     <ClInclude Include="SolidEffect.hpp" />
     <ClInclude Include="SolidGeometryEffect.hpp" />
+    <ClInclude Include="SpecularPhonePointScene.hpp" />
+    <ClInclude Include="SpecularPhongPointEffect.hpp" />
     <ClInclude Include="Sphere.hpp" />
     <ClInclude Include="Surface.hpp" />
     <ClInclude Include="TextureEffect.hpp" />

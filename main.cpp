@@ -16,6 +16,7 @@
 #include "GouraudScene.hpp"
 #include "GouraudPointScene.hpp"
 #include "PhongPointScene.hpp"
+#include "SpecularPhonePointScene.hpp"
 
 class Game {
 public:
@@ -30,6 +31,7 @@ public:
         const std::string bunny_obj_path = "Models\\bunny.obj";
         const std::string suzanne_obj_path = "Models\\suzanne.obj";
 
+        _scenes.push_back(std::make_unique<SpecularPhongPointScene>(_gfx, IndexedTriangleList<SpecularPhongPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, IndexedTriangleList<PhongPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, Plane::GetNormals<PhongPointScene::Vertex>()));
         _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, Plane::GetNormals<GouraudPointScene::Vertex>()));
