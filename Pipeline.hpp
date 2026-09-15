@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <memory>
 #include "Graphics.hpp"
 #include "Triangle.hpp"
 #include "IndexedTriangleList.hpp"
@@ -21,9 +22,17 @@ public:
 public:
 	Pipeline(Graphics& gfx)
 		:
+		Pipeline(gfx, std::make_shared<ZBuffer>(gfx.GetFrameWidth(), gfx.GetFrameHeight()))
+	{
+	}
+	Pipeline(Graphics& gfx, std::shared_ptr<ZBuffer> pZb_in)
+		:
 		gfx(gfx),
 		pc3t(gfx.GetFrameWidth(), gfx.GetFrameHeight()),
-		zb(gfx.GetFrameWidth(), gfx.GetFrameHeight()) {}
+		zb(std::move(pZb_in))
+	{
+		assert(zb->GetHeight() == gfx.GetFrameHeight() && zb->GetWidth() == gfx.GetFrameWidth());
+	}
 	void Draw(IndexedTriangleList<Vertex>& triList)
 	{
 		ProcessVertices(triList.vertices, triList.indices);
@@ -31,7 +40,7 @@ public:
 	// needed to reset the z-buffer after each frame
 	void BeginFrame()
 	{
-		zb.Clear();
+		zb->Clear();
 	}
 private:
 	// vertex processing function
@@ -82,8 +91,6 @@ private:
 	}
 	// vertex post-processing function
 	// perform perspective and viewport transformations
-	// accept triangle by value so temporaries returned from the
-	// geometry shader can be passed directly
 	void PostProcessTriangleVertices(Triangle<GSOut>& triangle)
 	{
 		// perspective divide and screen transform for all 3 vertices
@@ -225,7 +232,7 @@ private:
 				const float z = 1.0f / iLine.pos.z;
 				// do z rejection / update of z buffer
 				// skip shading step if z rejected (early z)
-				if (zb.TestAndSet(x, y, z))
+				if (zb->TestAndSet(x, y, z))
 				{
 					// recover interpolated attributes
 					// (wasted effort in multiplying pos (x,y,z) here, but
@@ -243,5 +250,5 @@ public:
 private:
 	Graphics& gfx;
 	PC3Transformer pc3t;
-	ZBuffer zb;
+	std::shared_ptr<ZBuffer> zb;
 };

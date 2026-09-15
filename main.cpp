@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Graphics.hpp"
+#include "Sphere.hpp"
 #include "CubeSkinnedScene.hpp"
 #include "CubeVertexColorScene.hpp"
 #include "CubeSolidScene.hpp"
@@ -13,7 +14,7 @@
 #include "CubeFlatIndependentScene.hpp"
 #include "GeometryFlatScene.hpp"
 #include "GouraudScene.hpp"
-#include "Sphere.hpp"
+#include "GouraudPointScene.hpp"
 
 class Game {
 public:
@@ -28,6 +29,8 @@ public:
         const std::string bunny_obj_path = "Models\\bunny.obj";
         const std::string suzanne_obj_path = "Models\\suzanne.obj";
 
+        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, Plane::GetNormals<GouraudPointScene::Vertex>(1)));
+        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, IndexedTriangleList<GouraudPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<GouraudScene>(_gfx, IndexedTriangleList<GouraudScene::Vertex>::LoadNormals(suzanne_obj_path)));
         _scenes.push_back(std::make_unique<GouraudScene>(_gfx, Sphere::GetPlainNormals<GouraudScene::Vertex>()));
         _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Sphere::GetPlain<GeometryFlatScene::Vertex>( 1.0f, 36, 72 )));

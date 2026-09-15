@@ -155,6 +155,12 @@
     <ClInclude Include="GouraudScene.hpp">
       <Filter>Header Files\Seens</Filter>
     </ClInclude>
+    <ClInclude Include="GouraudPointEffect.hpp">
+      <Filter>Header Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GouraudPointScene.hpp">
+      <Filter>Header Files\Seens</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\sauron.png">

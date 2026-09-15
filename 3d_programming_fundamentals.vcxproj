@@ -166,6 +166,8 @@
     <ClInclude Include="GeometryFlatEffect.hpp" />
     <ClInclude Include="GeometryFlatScene.hpp" />
     <ClInclude Include="GouraudEffect.hpp" />
+    <ClInclude Include="GouraudPointEffect.hpp" />
+    <ClInclude Include="GouraudPointScene.hpp" />
     <ClInclude Include="GouraudScene.hpp" />
     <ClInclude Include="Miniball.hpp" />
     <ClInclude Include="Pipeline.hpp" />
