@@ -7,22 +7,17 @@ template <typename T>
 class _Vec3 : public _Vec2<T>
 {
 public:
-	_Vec3() {}
+	_Vec3() = default;
 	_Vec3(T x, T y, T z)
 		:
 		_Vec2<T>(x, y),
 		z(z)
 	{
 	}
-	_Vec3(const _Vec3& vect)
-		:
-		_Vec3(vect.x, vect.y, vect.z)
-	{
-	}
 	template <typename T2>
 	explicit operator _Vec3<T2>() const
 	{
-		return{ (T2)this->x,(T2)this->y,(T2)z };
+		return{ (T2)this->x,(T2)this->y,(T2)this->z };
 	}
 	T		LenSq() const
 	{
