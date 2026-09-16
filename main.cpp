@@ -4,19 +4,8 @@
 
 #include "Graphics.hpp"
 #include "Sphere.hpp"
-#include "CubeSkinnedScene.hpp"
-#include "CubeVertexColorScene.hpp"
-#include "CubeSolidScene.hpp"
-#include "DoubleCubeScene.hpp"
-#include "VertexWaveScene.hpp"
-#include "CubeVertexPositionColorScene.hpp"
-#include "CubeSolidGeometryScene.hpp"
-#include "CubeFlatIndependentScene.hpp"
-#include "GeometryFlatScene.hpp"
-#include "GouraudScene.hpp"
-#include "GouraudPointScene.hpp"
-#include "PhongPointScene.hpp"
-#include "SpecularPhonePointScene.hpp"
+#include "TestTriangle.hpp"
+#include "SpecularPhongPointScene.hpp"
 
 class Game {
 public:
@@ -31,27 +20,8 @@ public:
         const std::string bunny_obj_path = "Models\\bunny.obj";
         const std::string suzanne_obj_path = "Models\\suzanne.obj";
 
+        _scenes.push_back(std::make_unique<SpecularPhongPointScene>(_gfx, TestTriangle::GetNormals<SpecularPhongPointScene::Vertex>()));
         _scenes.push_back(std::make_unique<SpecularPhongPointScene>(_gfx, IndexedTriangleList<SpecularPhongPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, IndexedTriangleList<PhongPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<PhongPointScene>(_gfx, Plane::GetNormals<PhongPointScene::Vertex>()));
-        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, Plane::GetNormals<GouraudPointScene::Vertex>()));
-        _scenes.push_back(std::make_unique<GouraudPointScene>(_gfx, IndexedTriangleList<GouraudPointScene::Vertex>::LoadNormals(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<GouraudScene>(_gfx, IndexedTriangleList<GouraudScene::Vertex>::LoadNormals(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<GouraudScene>(_gfx, Sphere::GetPlainNormals<GouraudScene::Vertex>()));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Sphere::GetPlain<GeometryFlatScene::Vertex>( 1.0f, 36, 72 )));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, IndexedTriangleList<GeometryFlatScene::Vertex>::Load(suzanne_obj_path)));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, IndexedTriangleList<GeometryFlatScene::Vertex>::Load(bunny_obj_path)));
-        _scenes.push_back(std::make_unique<GeometryFlatScene>(_gfx, Cube::GetPlain<GeometryFlatScene::Vertex>()));
-        _scenes.push_back(std::make_unique<CubeFlatIndependentScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeSolidGeometryScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeVertexPositionColorScene>(_gfx));
-        _scenes.push_back(std::make_unique<VertexWaveScene>(_gfx, sauron_img_path));
-        _scenes.push_back(std::make_unique<DoubleCubeScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeSolidScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeVertexColorScene>(_gfx));
-        _scenes.push_back(std::make_unique<CubeSkinnedScene>(_gfx, office_skin_img_path));
-        _scenes.push_back(std::make_unique<CubeSkinnedScene>(_gfx, dice_skin_img_path));
         _curr_scene = _scenes.begin();
     }
 
@@ -120,7 +90,7 @@ private:
 
 int main() {
     const int frame_width{ 640 };
-    const int frame_height{ 640 };
+    const int frame_height{ 480 };
     const char* window_name = "3D Programming Fundamentals";
     
     try {
