@@ -176,8 +176,7 @@
     <ClInclude Include="CubeSkinnedScene.hpp" />
     <ClInclude Include="Graphics.hpp" />
     <ClInclude Include="IndexedTriangleList.hpp" />
-    <ClInclude Include="Mat2.hpp" />
-    <ClInclude Include="Mat3.hpp" />
+    <ClInclude Include="Mat.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="PC3Transformer.hpp" />
     <ClInclude Include="Plane.hpp" />
@@ -193,6 +192,7 @@
     <ClInclude Include="Triangle.hpp" />
     <ClInclude Include="Vec2.hpp" />
     <ClInclude Include="Vec3.hpp" />
+    <ClInclude Include="Vec4.hpp" />
     <ClInclude Include="VertexColorEffect.hpp" />
     <ClInclude Include="VertexFlatEffect.hpp" />
     <ClInclude Include="VertexPositionColorEffect.hpp" />

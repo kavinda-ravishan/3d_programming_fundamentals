@@ -2,7 +2,7 @@
 
 #include "Scene.hpp"
 #include "Plane.hpp"
-#include "Mat3.hpp"
+#include "Mat.hpp"
 #include "WaveVertexTextureEffect.hpp"
 
 class VertexWaveScene : public Scene

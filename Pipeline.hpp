@@ -6,7 +6,7 @@
 #include "Triangle.hpp"
 #include "IndexedTriangleList.hpp"
 #include "PC3Transformer.hpp"
-#include "Mat3.hpp"
+#include "Mat.hpp"
 #include "ZBuffer.hpp"
 
 // triangle drawing pipeline with programable

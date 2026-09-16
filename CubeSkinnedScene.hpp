@@ -2,7 +2,7 @@
 #include <string>
 #include "Scene.hpp"
 #include "Cube.hpp"
-#include "Mat3.hpp"
+#include "Mat.hpp"
 #include "Pipeline.hpp"
 #include "TextureEffect.hpp"
 

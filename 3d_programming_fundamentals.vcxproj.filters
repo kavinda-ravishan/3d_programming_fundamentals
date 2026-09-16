@@ -44,13 +44,10 @@
     <ClInclude Include="Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mat2.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Vec3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mat3.hpp">
+    <ClInclude Include="Mat.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PC3Transformer.hpp">
@@ -172,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="SpecularPhonePointScene.hpp">
       <Filter>Header Files\Seens</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec4.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

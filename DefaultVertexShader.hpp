@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mat3.hpp"
+#include "Mat.hpp"
 
 template<class Vertex>
 class DefaultVertexShader

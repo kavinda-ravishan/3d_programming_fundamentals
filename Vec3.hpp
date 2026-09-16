@@ -37,7 +37,7 @@ public:
 		const T length = Len();
 		this->x /= length;
 		this->y /= length;
-		z /= length;
+		this->z /= length;
 		return *this;
 	}
 	_Vec3 GetNormalized() const
@@ -54,21 +54,21 @@ public:
 	{
 		this->x = rhs.x;
 		this->y = rhs.y;
-		z = rhs.z;
+		this->z = rhs.z;
 		return *this;
 	}
 	_Vec3& operator+=(const _Vec3& rhs)
 	{
 		this->x += rhs.x;
 		this->y += rhs.y;
-		z += rhs.z;
+		this->z += rhs.z;
 		return *this;
 	}
 	_Vec3& operator-=(const _Vec3& rhs)
 	{
 		this->x -= rhs.x;
 		this->y -= rhs.y;
-		z -= rhs.z;
+		this->z -= rhs.z;
 		return *this;
 	}
 	T operator*(const _Vec3& rhs) const
@@ -87,7 +87,7 @@ public:
 	{
 		this->x *= rhs;
 		this->y *= rhs;
-		z *= rhs;
+		this->z *= rhs;
 		return *this;
 	}
 	_Vec3 operator*(const T& rhs) const
@@ -105,7 +105,7 @@ public:
 	{
 		this->x /= rhs;
 		this->y /= rhs;
-		z /= rhs;
+		this->z /= rhs;
 		return *this;
 	}
 	_Vec3 operator/(const T& rhs) const
